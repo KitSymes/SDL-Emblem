@@ -5,10 +5,16 @@
 #include<iostream>
 using namespace std;
 
+// Function Prototypes
 bool InitSDL();
 void CloseSDL();
+bool Update();
 
+// Global Pointers
 SDL_Window* g_window = nullptr;
+
+// Global Variables
+bool quit = false;
 
 int main(int argc, char* args[])
 {
@@ -17,7 +23,10 @@ int main(int argc, char* args[])
 	{
 		// Window Created
 
-		SDL_Delay(5000);
+		while (!quit)
+		{
+			quit = Update();
+		}
 	}
 
 	CloseSDL();
@@ -57,4 +66,29 @@ void CloseSDL()
 	// Quit SDL Subsystems
 	IMG_Quit();
 	SDL_Quit();
+}
+
+bool Update()
+{
+	SDL_Event e;
+	SDL_PollEvent(&e);
+
+	switch (e.type)
+	{
+	case SDL_QUIT:
+		return true;
+		break;
+	case SDL_KEYUP:
+		switch (e.key.keysym.sym)
+		{
+		case SDLK_q:
+			return true;
+			break;
+		}
+		break;
+	case SDL_MOUSEBUTTONDOWN:
+		return true;
+		break;
+	}
+	return false;
 }
