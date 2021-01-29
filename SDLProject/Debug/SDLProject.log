@@ -1,3 +1,6 @@
-﻿  Source.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Source.cpp(85): warning C4715: 'InitSDL': not all control paths return a value
+﻿  Texture2D.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.cpp(57,38): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.cpp(57,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.cpp(57,50): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.cpp(57,50): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   SDLProject.vcxproj -> E:\Users\Owner\Documents\GitHub\SDLProject\Debug\SDLProject.exe

@@ -20,8 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Commons.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="SDL\image_include\SDL_image.h" />
     <ClInclude Include="SDL\include\begin_code.h" />
@@ -109,6 +111,7 @@
     <ClInclude Include="SDL\include\SDL_video.h" />
     <ClInclude Include="SDL\include\SDL_vulkan.h" />
     <ClInclude Include="SDL\mixer_include\SDL_mixer.h" />
+    <ClInclude Include="Texture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL2\SDL\SDL2.lib" />
