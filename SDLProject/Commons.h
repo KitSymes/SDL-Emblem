@@ -22,7 +22,7 @@ struct Vector2D
 enum SCREENS
 {
 	SCREEN_TITLE,
-	SCREEN_LEVEL1,
+	SCREEN_MAP,
 	SCREEN_GAMEOVER
 };
 #endif

@@ -1,12 +1,16 @@
-﻿  GameScreen.cpp
-  GameScreenLevel1.cpp
-  GameScreenManager.cpp
-  Source.cpp
-  Texture2D.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.cpp(57,38): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.cpp(57,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.cpp(57,50): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.cpp(57,50): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Source.cpp(85): warning C4715: 'InitSDL': not all control paths return a value
+﻿  GameScreenLevel1.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(145,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(145,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(147,77): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(147,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(149,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(149,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(177,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(177,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(184,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(184,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(191,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(191,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(198,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(198,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   SDLProject.vcxproj -> E:\Users\Owner\Documents\GitHub\SDLProject\Debug\SDLProject.exe

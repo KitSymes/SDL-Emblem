@@ -6,6 +6,8 @@
 #include "Texture2D.h"
 #include "Commons.h"
 #include "GameScreenManager.h"
+#include<stdio.h>
+#include "LTimer.h"
 using namespace std;
 
 // Function Prototypes
@@ -23,20 +25,45 @@ Uint32 g_old_time;
 // Global Variables
 bool quit = false;
 
+// Global Constants
+const int SCREEN_FPS = 20;
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+
 int main(int argc, char* args[])
 {
+
 	// Try to create Window
 	if (InitSDL())
 	{
 		// Window Created Successfully
-		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_LEVEL1);
+		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_MAP);
 		g_old_time = SDL_GetTicks();
 
+		LTimer fpsTimer;
+		LTimer capTimer;
+		int frames = 0;
+		fpsTimer.start();
 
 		while (!quit)
 		{
+			capTimer.start();
+
 			Render();
 			quit = Update();
+
+			float averageFPS = frames / (fpsTimer.getTicks() / 100.0f);
+			if (averageFPS > 2000000)
+				averageFPS = 0;
+
+			++frames;
+
+			//If frame finished early
+			int frameTicks = capTimer.getTicks();
+			if (frameTicks < SCREEN_TICKS_PER_FRAME)
+			{
+				//Wait remaining time
+				SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTicks);
+			}
 		}
 	}
 
