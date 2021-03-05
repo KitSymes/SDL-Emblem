@@ -5,7 +5,7 @@
 #include "GameScreen.h"
 class Texture2D;
 class Character;
-class GameScreenLevel1 : GameScreen
+class MapScreen : GameScreen
 {
 private:
 	Texture2D* m_background_texture;
@@ -69,8 +69,8 @@ private:
 
 	bool moving = false;
 public:
-	GameScreenLevel1(SDL_Renderer* renderer);
-	~GameScreenLevel1();
+	MapScreen(SDL_Renderer* renderer);
+	~MapScreen();
 
 	void Render() override;
 	void Update(float deltaTime, SDL_Event e) override;

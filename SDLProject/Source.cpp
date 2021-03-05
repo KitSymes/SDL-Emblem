@@ -7,7 +7,6 @@
 #include "Commons.h"
 #include "GameScreenManager.h"
 #include<stdio.h>
-#include "LTimer.h"
 using namespace std;
 
 // Function Prototypes
@@ -24,10 +23,15 @@ Uint32 g_old_time;
 
 // Global Variables
 bool quit = false;
+bool capFramerate = true;
 
 // Global Constants
 const int SCREEN_FPS = 20;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+unsigned int a = SDL_GetTicks();
+unsigned int b = SDL_GetTicks();
+double delta = 0;
+
 
 int main(int argc, char* args[])
 {
@@ -36,34 +40,28 @@ int main(int argc, char* args[])
 	if (InitSDL())
 	{
 		// Window Created Successfully
-		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_MAP);
+		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_MARIO);
 		g_old_time = SDL_GetTicks();
-
-		LTimer fpsTimer;
-		LTimer capTimer;
-		int frames = 0;
-		fpsTimer.start();
 
 		while (!quit)
 		{
-			capTimer.start();
+			if (capFramerate)
+			{
+				a = SDL_GetTicks();
+				delta = a - b;
+
+				if (delta > 1000 / 60.0)
+				{
+					b = a;
+
+					Render();
+					quit = Update();
+				}
+				continue;
+			}
 
 			Render();
 			quit = Update();
-
-			float averageFPS = frames / (fpsTimer.getTicks() / 100.0f);
-			if (averageFPS > 2000000)
-				averageFPS = 0;
-
-			++frames;
-
-			//If frame finished early
-			int frameTicks = capTimer.getTicks();
-			if (frameTicks < SCREEN_TICKS_PER_FRAME)
-			{
-				//Wait remaining time
-				SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTicks);
-			}
 		}
 	}
 

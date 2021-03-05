@@ -1,16 +1,36 @@
-﻿  GameScreenLevel1.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(145,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(145,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(147,77): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(147,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(149,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(149,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(177,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(177,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(184,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(184,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(191,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(191,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(198,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenLevel1.cpp(198,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  Collisions.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  GameScreenManager.cpp
+  LuigiMarioPlayer.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  MarioLevelMap.cpp
+  MarioMarioPlayer.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  MarioPlayer.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(64,28): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(129,61): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(150,32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(192,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(193,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(203,26): warning C4305: '+=': truncation from 'double' to 'float'
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(233,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(234,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(244,27): warning C4305: '+=': truncation from 'double' to 'float'
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(253,47): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(255,43): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.cpp(271,15): warning C4305: '=': truncation from 'double' to 'float'
+  MarioScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioPlayer.h(46,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  PowBlock.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\PowBlock.cpp(46,50): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\PowBlock.cpp(46,50): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Source.cpp
+  Generating Code...
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Source.cpp(110): warning C4715: 'InitSDL': not all control paths return a value
   SDLProject.vcxproj -> E:\Users\Owner\Documents\GitHub\SDLProject\Debug\SDLProject.exe

@@ -1,14 +1,14 @@
-#include "GameScreenLevel1.h"
+#include "MapScreen.h"
 #include <iostream>
 #include "Texture2D.h"
 #include "Character.h"
 
-GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer)
+MapScreen::MapScreen(SDL_Renderer* renderer) : GameScreen(renderer)
 {
 	SetUpLevel();
 }
 
-GameScreenLevel1::~GameScreenLevel1()
+MapScreen::~MapScreen()
 {
 	currentPos = nullptr;
 
@@ -33,7 +33,7 @@ GameScreenLevel1::~GameScreenLevel1()
 	delete castleLevel;
 }
 
-bool GameScreenLevel1::SetUpLevel()
+bool MapScreen::SetUpLevel()
 {
 	start = new PoI(11, 9);
 	start->locked = false;
@@ -128,7 +128,7 @@ bool GameScreenLevel1::SetUpLevel()
 	return true;
 }
 
-void GameScreenLevel1::Render()
+void MapScreen::Render()
 {
 	m_background_texture->Render(Vector2D(), SDL_FLIP_NONE);
 
@@ -136,11 +136,11 @@ void GameScreenLevel1::Render()
 	while (true)
 	{
 		if (poiPointer->complete)
-			m_levelComplete_texture->Render(Vector2D(poiPointer->x * 32, poiPointer->y * 32), SDL_FLIP_NONE);
+			m_levelComplete_texture->Render(Vector2D(poiPointer->x * 32.0f, poiPointer->y * 32.0f), SDL_FLIP_NONE);
 		else if (poiPointer->locked)
-			m_levelLocked_texture->Render(Vector2D(poiPointer->x * 32, poiPointer->y * 32), SDL_FLIP_NONE);
+			m_levelLocked_texture->Render(Vector2D(poiPointer->x * 32.0f, poiPointer->y * 32.0f), SDL_FLIP_NONE);
 		else
-			m_levelUnlocked_texture->Render(Vector2D(poiPointer->x * 32, poiPointer->y * 32), SDL_FLIP_NONE);
+			m_levelUnlocked_texture->Render(Vector2D(poiPointer->x * 32.0f, poiPointer->y * 32.0f), SDL_FLIP_NONE);
 
 		if (poiPointer == firstLevel)
 			poiPointer = forestLevel;
@@ -156,8 +156,9 @@ void GameScreenLevel1::Render()
 	myChar->Render();
 }
 
-void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
+void MapScreen::Update(float deltaTime, SDL_Event e)
 {
+	moving = false;
 	myChar->Update(deltaTime, e);
 	if (!moving) // TODO actually move smoothly
 		switch (e.type)

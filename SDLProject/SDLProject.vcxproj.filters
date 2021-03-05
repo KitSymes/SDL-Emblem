@@ -24,16 +24,34 @@
     <ClCompile Include="GameScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameScreenLevel1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameScreenManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LTimer.cpp">
+    <ClCompile Include="MapScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioMarioPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LuigiMarioPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collisions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioLevelMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PowBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -308,16 +326,34 @@
     <ClInclude Include="GameScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameScreenLevel1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameScreenManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LTimer.h">
+    <ClInclude Include="MapScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioMarioPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuigiMarioPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collisions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioLevelMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PowBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

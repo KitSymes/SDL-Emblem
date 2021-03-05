@@ -20,21 +20,33 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="GameScreen.cpp" />
-    <ClCompile Include="GameScreenLevel1.cpp" />
+    <ClCompile Include="MarioLevelMap.cpp" />
+    <ClCompile Include="LuigiMarioPlayer.cpp" />
+    <ClCompile Include="MapScreen.cpp" />
     <ClCompile Include="GameScreenManager.cpp" />
-    <ClCompile Include="LTimer.cpp" />
+    <ClCompile Include="MarioMarioPlayer.cpp" />
+    <ClCompile Include="MarioPlayer.cpp" />
+    <ClCompile Include="MarioScreen.cpp" />
+    <ClCompile Include="PowBlock.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Collisions.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="GameScreen.h" />
-    <ClInclude Include="GameScreenLevel1.h" />
+    <ClInclude Include="MarioLevelMap.h" />
+    <ClInclude Include="LuigiMarioPlayer.h" />
+    <ClInclude Include="MapScreen.h" />
     <ClInclude Include="GameScreenManager.h" />
-    <ClInclude Include="LTimer.h" />
+    <ClInclude Include="MarioMarioPlayer.h" />
+    <ClInclude Include="MarioPlayer.h" />
+    <ClInclude Include="MarioScreen.h" />
+    <ClInclude Include="PowBlock.h" />
     <ClInclude Include="SDL\image_include\SDL_image.h" />
     <ClInclude Include="SDL\include\begin_code.h" />
     <ClInclude Include="SDL\include\close_code.h" />

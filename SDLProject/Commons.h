@@ -19,10 +19,29 @@ struct Vector2D
 	}
 };
 
+struct Rect2D
+{
+	float x, y, width, height;
+	Rect2D(float xPos, float yPos, float width, float height)
+	{
+		x = xPos;
+		y = yPos;
+		this->width = width;
+		this->height = height;
+	}
+};
+
 enum SCREENS
 {
 	SCREEN_TITLE,
+	SCREEN_MARIO,
 	SCREEN_MAP,
 	SCREEN_GAMEOVER
+};
+
+enum FACING
+{
+	FACING_LEFT,
+	FACING_RIGHT
 };
 #endif

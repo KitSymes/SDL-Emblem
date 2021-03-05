@@ -1,7 +1,7 @@
 #include "GameScreenManager.h"
 #include "GameScreen.h"
-#include "GameScreenLevel1.h"
-
+#include "MapScreen.h"
+#include "MarioScreen.h"
 
 GameScreenManager::GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen)
 {
@@ -34,8 +34,11 @@ void GameScreenManager::ChangeScreen(SCREENS screen)
 
 	switch (screen)
 	{
+	case SCREEN_MARIO:
+		m_current_screen = (GameScreen*)new MarioScreen(m_renderer);
+		break;
 	case SCREEN_MAP:
-		m_current_screen = (GameScreen*)new GameScreenLevel1(m_renderer);
+		m_current_screen = (GameScreen*)new MapScreen(m_renderer);
 		break;
 	case SCREEN_TITLE:
 	case SCREEN_GAMEOVER:

@@ -13,6 +13,8 @@ protected:
 	Vector2D m_position;
 	Texture2D* m_texture;
 	int frame = 0;
+	int m_sourceX, m_sourceY;
+	int m_sourceWidth, m_sourceHeight;
 public:
 	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position);
 	~Character();

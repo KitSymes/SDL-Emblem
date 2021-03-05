@@ -2,26 +2,32 @@
 #include <SDL_Image.h>
 #include <iostream>
 
+Texture2D::Texture2D(SDL_Renderer* renderer)
+{
+	m_renderer = renderer;
+	Init(renderer, -1, -1/*, 0, 0, -1, -1*/);
+}
+
 Texture2D::Texture2D(SDL_Renderer* renderer, int width, int height)
 {
-	Init(renderer, width, height, 0, 0, width, height);
+	Init(renderer, width, height/*, 0, 0, width, height*/);
 }
 
-Texture2D::Texture2D(SDL_Renderer* renderer, int width, int height, int sx, int sy, int sWidth, int sHeight)
+/*Texture2D::Texture2D(SDL_Renderer* renderer, int width, int height, int sx, int sy, int sWidth, int sHeight)
 {
 	Init(renderer, width, height, sx, sy, sWidth, sHeight);
-}
+}*/
 
-void Texture2D::Init(SDL_Renderer* renderer, int width, int height, int sx, int sy, int sWidth, int sHeight)
+void Texture2D::Init(SDL_Renderer* renderer, int width, int height/*, int sx, int sy, int sWidth, int sHeight*/)
 {
 	m_renderer = renderer;
 	m_width = width;
 	m_height = height;
 
-	m_sourceX = sx;
+	/*m_sourceX = sx;
 	m_sourceY = sy;
 	m_sourceWidth = sWidth;
-	m_sourceHeight = sHeight;
+	m_sourceHeight = sHeight;*/
 }
 
 Texture2D::~Texture2D()
@@ -50,9 +56,15 @@ bool Texture2D::LoadFromFile(std::string path)
 		else
 		{
 			if (m_width == -1)
+			{
 				m_width = p_surface->w;
+				//m_sourceWidth = m_width;
+			}
 			if (m_height == -1)
+			{
 				m_height = p_surface->h;
+				//m_sourceHeight = m_height;
+			}
 		}
 		SDL_FreeSurface(p_surface);
 	}
@@ -75,6 +87,13 @@ void Texture2D::Free()
 void Texture2D::Render(Vector2D position, SDL_RendererFlip flip, double angle)
 {
 	SDL_Rect renderLocation = { position.x, position.y, m_width, m_height };
-	SDL_Rect renderSource = { m_sourceX, m_sourceY, m_sourceWidth, m_sourceHeight };
+	SDL_Rect renderSource = { 0, 0, m_width, m_height };
 	SDL_RenderCopyEx(m_renderer, m_texture, &renderSource, &renderLocation, angle, NULL, flip);
+}
+
+void Texture2D::Render(Vector2D position, SDL_Rect* source, SDL_RendererFlip flip, double angle)
+{
+	SDL_Rect renderLocation = { position.x, position.y, m_width, m_height };
+	//SDL_Rect renderSource = { m_sourceX, m_sourceY, m_sourceWidth, m_sourceHeight };
+	SDL_RenderCopyEx(m_renderer, m_texture, source, &renderLocation, angle, NULL, flip);
 }
