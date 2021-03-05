@@ -2,7 +2,7 @@
 #ifndef _COLLISIONS_H
 #define _COLLISIONS_H
 #include "Commons.h"
-class MarioPlayer;
+class MarioCharacter;
 class Collisions
 {
 private:

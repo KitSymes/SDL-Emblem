@@ -1,5 +1,5 @@
 #include "Collisions.h"
-#include "MarioPlayer.h"
+#include "MarioCharacter.h"
 
 Collisions* Collisions::m_instance = nullptr;
 

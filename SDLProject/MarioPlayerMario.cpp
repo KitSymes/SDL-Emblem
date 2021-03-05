@@ -1,21 +1,21 @@
-#include "MarioMarioPlayer.h"
+#include "MarioPlayerMario.h"
 #include "Texture2D.h"
 #include "Constants.h"
 
-MarioMarioPlayer::MarioMarioPlayer(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen) : MarioPlayer(renderer, imagePath, start_position, screen)
+MarioPlayerMario::MarioPlayerMario(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen) : MarioCharacter(renderer, imagePath, start_position, screen)
 {
 	m_jump_force = 10.0f;
 	m_max_momentum = 6.0f;
 }
 
-MarioMarioPlayer::~MarioMarioPlayer()
+MarioPlayerMario::~MarioPlayerMario()
 {
 
 }
 
-void MarioMarioPlayer::Update(float deltaTime, SDL_Event e)
+void MarioPlayerMario::Update(float deltaTime, SDL_Event e)
 {
-	MarioPlayer::Update(deltaTime, e);
+	MarioCharacter::Update(deltaTime, e);
 
 	switch (e.type)
 	{
@@ -29,7 +29,7 @@ void MarioMarioPlayer::Update(float deltaTime, SDL_Event e)
 			m_moving_right = true;
 			break;
 		case SDLK_w:
-			Jump(deltaTime);
+			Jump();
 			break;
 		}
 		break;

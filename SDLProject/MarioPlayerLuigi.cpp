@@ -1,20 +1,20 @@
-#include "LuigiMarioPlayer.h"
+#include "MarioPlayerLuigi.h"
 #include "Texture2D.h"
 #include "Constants.h"
 
-LuigiMarioPlayer::LuigiMarioPlayer(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen) : MarioPlayer(renderer, imagePath, start_position, screen)
+MarioPlayerLuigi::MarioPlayerLuigi(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen) : MarioCharacter(renderer, imagePath, start_position, screen)
 {
 	m_jump_force = 12.0f;
 }
 
-LuigiMarioPlayer::~LuigiMarioPlayer()
+MarioPlayerLuigi::~MarioPlayerLuigi()
 {
 
 }
 
-void LuigiMarioPlayer::Update(float deltaTime, SDL_Event e)
+void MarioPlayerLuigi::Update(float deltaTime, SDL_Event e)
 {
-	MarioPlayer::Update(deltaTime, e);
+	MarioCharacter::Update(deltaTime, e);
 
 	switch (e.type)
 	{
@@ -28,7 +28,7 @@ void LuigiMarioPlayer::Update(float deltaTime, SDL_Event e)
 			m_moving_right = true;
 			break;
 		case SDLK_UP:
-			Jump(deltaTime);
+			Jump();
 			break;
 		}
 		break;

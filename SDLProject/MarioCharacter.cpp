@@ -1,7 +1,7 @@
-#include "MarioPlayer.h"
+#include "MarioCharacter.h"
 #include "Constants.h"
 
-MarioPlayer::MarioPlayer(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen)
+MarioCharacter::MarioCharacter(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen)
 {
 	m_renderer = renderer;
 	m_position = start_position;
@@ -15,19 +15,20 @@ MarioPlayer::MarioPlayer(SDL_Renderer* renderer, std::string imagePath, Vector2D
 	m_max_momentum = 5.0f;
 	m_collision_radius = 15.0;
 	m_screen = screen;
+	m_alive = true;
 
 	if (!m_texture->LoadFromFile(imagePath))
 		std::cout << "Image " << imagePath << " failed to load" << std::endl;
 }
 
-MarioPlayer::~MarioPlayer()
+MarioCharacter::~MarioCharacter()
 {
 	m_renderer = nullptr;
 	delete m_texture;
 	m_texture = nullptr;
 }
 
-void MarioPlayer::Render()
+void MarioCharacter::Render()
 {
 	if (m_facing_direction == FACING_RIGHT)
 		m_texture->Render(m_position, SDL_FLIP_NONE);
@@ -35,7 +36,7 @@ void MarioPlayer::Render()
 		m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);
 }
 
-void MarioPlayer::Update(float deltaTime, SDL_Event e)
+void MarioCharacter::Update(float deltaTime, SDL_Event e)
 {
 	/*if (m_moving_left)
 	{
@@ -62,9 +63,6 @@ void MarioPlayer::Update(float deltaTime, SDL_Event e)
 	int foot_position = (int)(m_position.y + m_texture->GetHeight()) / MARIO_TILE_HEIGHT;
 	int yMaxPositionAfterMove = (int)(m_position.y + m_texture->GetHeight() + m_velocity_vertical) / MARIO_TILE_HEIGHT;
 	int yMinPositionAfterMove = (m_position.y + m_velocity_vertical) / MARIO_TILE_HEIGHT;
-
-	if (m_velocity_vertical > 0)
-		m_can_jump = false;
 
 	bool addVelo = true;
 	bool hitPow = false;
@@ -127,14 +125,15 @@ void MarioPlayer::Update(float deltaTime, SDL_Event e)
 		{
 			m_velocity_vertical = 0;
 			m_position.y = MARIO_TILE_HEIGHT * yMaxPositionAfterMove - m_texture->GetHeight();
+			m_can_jump = true;
 		}
+		else m_can_jump = false;
 		int yPlus = (int)(m_position.y + m_texture->GetHeight() + 0.01) / MARIO_TILE_HEIGHT;
 		if ((m_screen->GetLevelMap()->GetTileAt(yPlus, xMinPosition) == 0
 			&& m_screen->GetLevelMap()->GetTileAt(yPlus, xMinPosition) == 0)
 			|| m_velocity_vertical < 0)
 			AddGravity(deltaTime);
 		else {
-			m_can_jump = true;
 			if (m_velocity_vertical > 0)
 				m_velocity_vertical = 0;
 		}
@@ -153,17 +152,17 @@ void MarioPlayer::Update(float deltaTime, SDL_Event e)
 	}
 }
 
-void MarioPlayer::setPosition(Vector2D new_position)
+void MarioCharacter::setPosition(Vector2D new_position)
 {
 	m_position = new_position;
 }
 
-Vector2D MarioPlayer::GetPosition()
+Vector2D MarioCharacter::GetPosition()
 {
 	return m_position;
 }
 
-void MarioPlayer::MoveLeft(float deltaTime)
+void MarioCharacter::MoveLeft(float deltaTime)
 {
 	m_facing_direction = FACING_LEFT;
 
@@ -175,13 +174,13 @@ void MarioPlayer::MoveLeft(float deltaTime)
 	//std::cout << "Mario At " << m_position.x / MARIO_TILE_WIDTH << " " << m_position.y / MARIO_TILE_HEIGHT << std::endl;
 	for (int i = 0; i < 2; i++)
 	{
-		int h = (int)((m_position.y + (m_texture->GetHeight())) / MARIO_TILE_HEIGHT) + (i - 1);
-		int w = (int)((m_position.x + (m_texture->GetWidth())) / MARIO_TILE_WIDTH) - 1;
+		int h = (int)((m_position.y + (m_texture->GetHeight() * 0.9f)) / MARIO_TILE_HEIGHT) + (i - 1);
+		int w = (int)((m_position.x) / MARIO_TILE_WIDTH);
 		if (h < 0 || h > MARIO_MAP_HEIGHT)
 			continue;
-		if (w < 0)
+		if (m_position.x < 0)
 		{
-			canMove = false;
+			canMove = m_canMoveOfscreen;
 			break;
 		}
 		else if (w > MARIO_MAP_WIDTH)
@@ -198,13 +197,13 @@ void MarioPlayer::MoveLeft(float deltaTime)
 
 	if (canMove)
 	{
-		m_position.x -= deltaTime * MOVEMENTSPEED * m_velocity_left;
+		m_position.x -= deltaTime * MOVEMENTSPEED * m_speed * m_velocity_left;
 		if (m_velocity_left < m_max_momentum)
 			m_velocity_left += 0.1;
 	}
 }
 
-void MarioPlayer::MoveRight(float deltaTime)
+void MarioCharacter::MoveRight(float deltaTime)
 {
 	m_facing_direction = FACING_RIGHT;
 
@@ -216,16 +215,16 @@ void MarioPlayer::MoveRight(float deltaTime)
 	//std::cout << "Mario At " << (m_position.x + (m_texture->GetWidth())) / MARIO_TILE_WIDTH << " " << (m_position.y + (m_texture->GetHeight() * 0.9)) / MARIO_TILE_HEIGHT << std::endl;
 	for (int i = 0; i < 2; i++)
 	{
-		int h = (int)((m_position.y + (m_texture->GetHeight() * 0.9)) / MARIO_TILE_HEIGHT) + (i - 1);
-		int w = (int)((m_position.x + (m_texture->GetWidth() * 0.5)) / MARIO_TILE_WIDTH) + 1;
+		int h = (int)((m_position.y + (m_texture->GetHeight() * 0.9f)) / MARIO_TILE_HEIGHT) + (i - 1);
+		int w = (int)((m_position.x + (m_texture->GetWidth() * 0.5f)) / MARIO_TILE_WIDTH) + 1;
 		if (h < 0 || h > MARIO_MAP_HEIGHT)
 			continue;
-		if (w > MARIO_MAP_WIDTH)
+		if (m_position.x + m_texture->GetWidth() > SCREEN_WIDTH)
 		{
-			canMove = false;
+			canMove = m_canMoveOfscreen;
 			break;
 		}
-		else if (w < 0)
+		else if (m_position.x < 0)
 			continue;
 		int tileType = m_screen->GetLevelMap()->GetTileAt(h, w);
 		if (tileType == 0) continue;
@@ -239,13 +238,13 @@ void MarioPlayer::MoveRight(float deltaTime)
 
 	if (canMove)
 	{
-		m_position.x += deltaTime * MOVEMENTSPEED * m_velocity_right;
+		m_position.x += deltaTime * MOVEMENTSPEED * m_speed * m_velocity_right;
 		if (m_velocity_right < m_max_momentum)
 			m_velocity_right += 0.1;
 	}
 }
 
-void MarioPlayer::AddGravity(float deltaTime)
+void MarioCharacter::AddGravity(float deltaTime)
 {
 	if (m_position.y < SCREEN_HEIGHT - m_texture->GetHeight())
 	{
@@ -256,7 +255,7 @@ void MarioPlayer::AddGravity(float deltaTime)
 	}
 }
 
-void MarioPlayer::Jump(float deltaTime)
+void MarioCharacter::Jump()
 {
 	if (m_can_jump)
 	{
@@ -275,7 +274,7 @@ void MarioPlayer::Jump(float deltaTime)
 	}
 }
 
-double MarioPlayer::GetCollisionRadius()
+double MarioCharacter::GetCollisionRadius()
 {
 	return m_collision_radius;
 }

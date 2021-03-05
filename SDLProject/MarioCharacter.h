@@ -9,7 +9,7 @@
 #include "MarioScreen.h"
 #include "Collisions.h"
 
-class MarioPlayer
+class MarioCharacter
 {
 protected:
 	SDL_Renderer* m_renderer;
@@ -27,11 +27,15 @@ protected:
 	float m_jump_force;
 	float m_max_momentum;
 	double m_collision_radius;
+	float m_speed = 1.0f;
 
 	MarioScreen* m_screen;
+protected:
+	bool m_alive;
+	bool m_canMoveOfscreen = false;
 public:
-	MarioPlayer(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen);
-	~MarioPlayer();
+	MarioCharacter(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen);
+	~MarioCharacter();
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
@@ -42,7 +46,11 @@ public:
 	void MoveLeft(float deltaTime);
 	void MoveRight(float deltaTime);
 	void AddGravity(float deltaTime);
-	void Jump(float deltaTime);
+	void Jump();
+
 	Rect2D GetCollisionBox() { return Rect2D(m_position.x, m_position.y, m_texture->GetWidth(), m_texture->GetHeight()); }
+	void SetAlive(bool alive) { m_alive = alive; }
+	bool IsAlive() { return m_alive; }
+
 };
 #endif
