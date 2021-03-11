@@ -57,6 +57,15 @@
     <ClCompile Include="MarioPlayerMario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MarioCharacterCoin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDL\image_include\SDL_image.h">
@@ -360,6 +369,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioCharacterCoin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

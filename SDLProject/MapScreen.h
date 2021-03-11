@@ -3,6 +3,7 @@
 #define _GAMESCREENLEVEL1_H
 #include "Commons.h"
 #include "GameScreen.h"
+#include <iostream>
 class Texture2D;
 class Character;
 class MapScreen : GameScreen
@@ -31,7 +32,7 @@ private:
 		PoI* eastPoI = nullptr;
 		PoI* westPoI = nullptr;
 
-		SCREENS screen = SCREEN_MAP;
+		std::string mapFile;
 
 		PoI(int xPos, int yPos)
 		{
@@ -69,7 +70,7 @@ private:
 
 	bool moving = false;
 public:
-	MapScreen(SDL_Renderer* renderer);
+	MapScreen(SDL_Renderer* renderer, GameScreenManager* gsm);
 	~MapScreen();
 
 	void Render() override;

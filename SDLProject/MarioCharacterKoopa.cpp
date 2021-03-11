@@ -7,13 +7,23 @@ MarioCharacterKoopa::MarioCharacterKoopa(SDL_Renderer* renderer, std::string ima
 	m_facing_direction = (start_position.x < SCREEN_WIDTH / 2 ? FACING_RIGHT : FACING_LEFT);
 	m_injured = false;
 	m_canMoveOfscreen = true;
+	m_screen_bounce = true;
 
 	m_single_sprite_w = m_texture->GetWidth() / 2;
 	m_single_sprite_h = m_texture->GetHeight();
 
 	m_speed = speed;
 
-	std::cout << m_speed << std::endl;
+	if (m_facing_direction == FACING_LEFT)
+	{
+		m_moving_left = true;
+		m_moving_right = false;
+	}
+	else
+	{
+		m_moving_left = false;
+		m_moving_right = true;
+	}
 }
 
 MarioCharacterKoopa::~MarioCharacterKoopa()

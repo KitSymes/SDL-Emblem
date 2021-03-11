@@ -44,4 +44,11 @@ enum FACING
 	FACING_LEFT,
 	FACING_RIGHT
 };
+
+enum MOVE_TYPE
+{
+	INFANTRY,
+	ARMOUR,
+	FLYING
+};
 #endif

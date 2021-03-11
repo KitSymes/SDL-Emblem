@@ -1,9 +1,10 @@
 #include "MapScreen.h"
-#include <iostream>
 #include "Texture2D.h"
 #include "Character.h"
+#include "GameScreenManager.h"
+#include "BattleScreen.h"
 
-MapScreen::MapScreen(SDL_Renderer* renderer) : GameScreen(renderer)
+MapScreen::MapScreen(SDL_Renderer* renderer, GameScreenManager* gsm) : GameScreen(renderer, gsm)
 {
 	SetUpLevel();
 }
@@ -56,6 +57,7 @@ bool MapScreen::SetUpLevel()
 
 
 	firstLevel = new PoI(11, 7);
+	firstLevel->mapFile = "map1.txt";
 	firstLevel->locked = false;
 	firstLevel->returnDir = 2;
 	firstLevel->south = new int[] {2, 2};
@@ -196,6 +198,16 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 					currentPos = currentPos->westPoI;
 					myChar->setPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
 					moving = true;
+				}
+				break;
+			case SDLK_RETURN:
+			case SDLK_KP_ENTER:
+				if (!currentPos->mapFile.empty())
+				{
+					std::cout << currentPos->mapFile << std::endl;
+					// TODO pass player's troops
+					BattleScreen* bs = new BattleScreen(m_renderer, m_gsm, (char*)("BattleMaps/" + currentPos->mapFile).c_str());
+					m_gsm->ChangeScreen(bs);
 				}
 				break;
 			}

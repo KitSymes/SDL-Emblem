@@ -15,6 +15,9 @@ protected:
 	int frame = 0;
 	int m_sourceX, m_sourceY;
 	int m_sourceWidth, m_sourceHeight;
+	int m_attack, m_defence, m_range;
+	int m_health, m_max_health;
+	MOVE_TYPE m_mov_type;
 public:
 	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position);
 	~Character();

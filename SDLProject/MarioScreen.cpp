@@ -7,8 +7,9 @@
 #include "Collisions.h"
 #include "PowBlock.h"
 #include "MarioCharacterKoopa.h"
+#include "MarioCharacterCoin.h"
 
-MarioScreen::MarioScreen(SDL_Renderer* renderer) : GameScreen(renderer)
+MarioScreen::MarioScreen(SDL_Renderer* renderer, GameScreenManager* gsm) : GameScreen(renderer, gsm)
 {
 	m_level_map = nullptr;
 	SetUpLevel();
@@ -17,6 +18,7 @@ MarioScreen::MarioScreen(SDL_Renderer* renderer) : GameScreen(renderer)
 MarioScreen::~MarioScreen()
 {
 	m_koopas.clear();
+	m_coins.clear();
 	delete m_background_texture;
 	m_background_texture = nullptr;
 	delete m_mario;
@@ -43,9 +45,9 @@ bool MarioScreen::SetUpLevel()
 	m_pow_block = new PowBlock(m_renderer, m_level_map);
 	m_screenshake = false;
 	m_background_yPos = 0.0f;
+	m_koopa_klock = 0;
 
-	CreateKoopa(Vector2D(0, 0), 0.5f);
-	CreateKoopa(Vector2D(0,0), 0.75f);
+	CreateCoin(Vector2D(224, 100));
 
 	return true;
 }
@@ -56,6 +58,10 @@ void MarioScreen::Render()
 		m_koopas[i]->Render();
 
 	m_background_texture->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
+
+	for (int i = 0; i < m_coins.size(); i++)
+		m_coins[i]->Render();
+
 	m_pow_block->Render();
 	m_mario->Render();
 	m_luigi->Render();
@@ -131,9 +137,17 @@ void MarioScreen::ShakeScreen()
 	for (unsigned int i = 0; i < m_koopas.size(); i++)
 		m_koopas[i]->TakeDamage();
 }
-
 void MarioScreen::UpdateEnemies(float deltaTime, SDL_Event e)
 {
+	if (m_koopa_klock == 0)
+	{
+		CreateKoopa(Vector2D(50, 32), 0.5f);
+		CreateKoopa(Vector2D(425, 32), 0.5f);
+		m_koopa_klock = 500;
+	}
+	else
+		m_koopa_klock--;
+
 	if (!m_koopas.empty())
 	{
 		int enemyIndexToDelete = -1;
@@ -190,4 +204,10 @@ void MarioScreen::CreateKoopa(Vector2D position, float speed)
 {
 	MarioCharacterKoopa* koopa = new MarioCharacterKoopa(m_renderer, "Images/Mario/Koopa.png", position, speed, this);
 	m_koopas.push_back(koopa);
+}
+
+void MarioScreen::CreateCoin(Vector2D position)
+{
+	MarioCharacterCoin* coin = new MarioCharacterCoin(m_renderer, "Images/Mario/Coin.png", position, this);
+	m_coins.push_back(coin);
 }

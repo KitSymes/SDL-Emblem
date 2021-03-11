@@ -9,6 +9,7 @@ class Texture2D;
 class MarioCharacter;
 class PowBlock;
 class MarioCharacterKoopa;
+class MarioCharacterCoin;
 
 class MarioScreen : GameScreen
 {
@@ -19,6 +20,7 @@ private:
 	MarioLevelMap* m_level_map;
 	PowBlock* m_pow_block;
 	std::vector<MarioCharacterKoopa*> m_koopas;
+	std::vector<MarioCharacterCoin*> m_coins;
 
 	bool SetUpLevel();
 	void SetLevelMap();
@@ -26,13 +28,15 @@ private:
 
 	void UpdateEnemies(float deltaTime, SDL_Event e);
 	void CreateKoopa(Vector2D position, float speed);
+	void CreateCoin(Vector2D position);
 
 	bool m_screenshake;
 	float m_shake_time;
 	float m_wobble;
 	float m_background_yPos;
+	int m_koopa_klock;
 public:
-	MarioScreen(SDL_Renderer* renderer);
+	MarioScreen(SDL_Renderer* renderer, GameScreenManager* gsm);
 	~MarioScreen();
 
 	void Render() override;

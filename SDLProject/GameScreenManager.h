@@ -18,5 +18,6 @@ public:
 	void Update(float deltaTime, SDL_Event e);
 
 	void ChangeScreen(SCREENS screen);
+	void ChangeScreen(GameScreen* screen);
 };
 #endif

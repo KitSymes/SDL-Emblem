@@ -40,7 +40,7 @@ int main(int argc, char* args[])
 	if (InitSDL())
 	{
 		// Window Created Successfully
-		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_MARIO);
+		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_TITLE);
 		g_old_time = SDL_GetTicks();
 
 		while (!quit)
@@ -138,12 +138,12 @@ bool Update()
 		return true;
 		break;
 	case SDL_KEYUP:
-		switch (e.key.keysym.sym)
+		/*switch (e.key.keysym.sym)
 		{
 		case SDLK_q:
 			return true;
 			break;
-		}
+		}*/
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		break;

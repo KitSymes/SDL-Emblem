@@ -1,16 +1,12 @@
-﻿  MarioCharacter.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(51,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(51,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(65,28): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(127,61): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(149,32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(192,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(193,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(203,26): warning C4305: '+=': truncation from 'double' to 'float'
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(234,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(235,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(245,27): warning C4305: '+=': truncation from 'double' to 'float'
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(254,47): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(256,43): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.cpp(272,15): warning C4305: '=': truncation from 'double' to 'float'
+﻿  BattleScreen.cpp
+  MapScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(175,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(175,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(183,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(183,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(191,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(191,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(199,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(199,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   SDLProject.vcxproj -> E:\Users\Owner\Documents\GitHub\SDLProject\Debug\SDLProject.exe

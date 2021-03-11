@@ -33,6 +33,7 @@ protected:
 protected:
 	bool m_alive;
 	bool m_canMoveOfscreen = false;
+	bool m_screen_bounce = false;
 public:
 	MarioCharacter(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, MarioScreen* screen);
 	~MarioCharacter();

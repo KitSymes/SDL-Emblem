@@ -180,7 +180,7 @@ void MarioCharacter::MoveLeft(float deltaTime)
 			continue;
 		if (m_position.x < 0)
 		{
-			canMove = m_canMoveOfscreen;
+			canMove = m_position.y < MARIO_MAP_HEIGHT * 0.5 && m_canMoveOfscreen;
 			break;
 		}
 		else if (w > MARIO_MAP_WIDTH)
@@ -200,6 +200,11 @@ void MarioCharacter::MoveLeft(float deltaTime)
 		m_position.x -= deltaTime * MOVEMENTSPEED * m_speed * m_velocity_left;
 		if (m_velocity_left < m_max_momentum)
 			m_velocity_left += 0.1;
+	}
+	else if (m_screen_bounce) {
+		m_moving_left = false;
+		m_moving_right = true;
+		m_facing_direction = FACING_RIGHT;
 	}
 }
 
@@ -221,7 +226,7 @@ void MarioCharacter::MoveRight(float deltaTime)
 			continue;
 		if (m_position.x + m_texture->GetWidth() > SCREEN_WIDTH)
 		{
-			canMove = m_canMoveOfscreen;
+			canMove = m_position.y < MARIO_MAP_HEIGHT * 0.5 && m_canMoveOfscreen;
 			break;
 		}
 		else if (m_position.x < 0)
@@ -241,6 +246,11 @@ void MarioCharacter::MoveRight(float deltaTime)
 		m_position.x += deltaTime * MOVEMENTSPEED * m_speed * m_velocity_right;
 		if (m_velocity_right < m_max_momentum)
 			m_velocity_right += 0.1;
+	}
+	else if (m_screen_bounce) {
+		m_moving_right = false;
+		m_moving_left = true;
+		m_facing_direction = FACING_LEFT;
 	}
 }
 
