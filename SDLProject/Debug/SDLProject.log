@@ -13,13 +13,19 @@ E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(148,49): 
 E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(148,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(154,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(154,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(208,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(208,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(268,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(268,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(325,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(331,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(403,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(409,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(259): warning C4715: 'BattleScreen::CheckHovered': not all control paths return a value
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(214,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(214,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(274,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(274,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(331,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(337,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(407,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(413,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Character.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.cpp(119,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.cpp(119,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.cpp(120,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.cpp(120,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(265): warning C4715: 'BattleScreen::CheckHovered': not all control paths return a value
   SDLProject.vcxproj -> E:\Users\Owner\Documents\GitHub\SDLProject\Debug\SDLProject.exe

@@ -28,7 +28,7 @@ Character::Character(SDL_Renderer* renderer, MOVE_TYPE move_type, WEAPON_TYPE we
 	m_animate = true;
 	m_mov_type = move_type;
 	m_weapon_type = weapon_type;
-	m_range = 2;
+	m_range = 1;
 	m_alive = false;
 	m_level = 1;
 	m_exp = 0;
