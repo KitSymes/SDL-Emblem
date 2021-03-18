@@ -46,3 +46,8 @@ bool Collisions::Box(Rect2D rect1, Rect2D rect2)
 
 	return true;
 }
+
+bool Collisions::Inside(int x, int y, Rect2D rect)
+{
+	return (rect.x <= x && x < rect.x + rect.width) && (rect.y <= y && y < rect.y + rect.height);
+}

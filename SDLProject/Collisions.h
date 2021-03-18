@@ -14,5 +14,6 @@ public:
 
 	bool Circle(Vector2D pos1, double radius1, Vector2D pos2, double radius2);
 	bool Box(Rect2D rect1, Rect2D rect2);
+	bool Inside(int x, int y, Rect2D rect);
 };
 #endif

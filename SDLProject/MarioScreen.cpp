@@ -49,6 +49,8 @@ bool MarioScreen::SetUpLevel()
 
 	CreateCoin(Vector2D(224, 100));
 
+	LoadMusic("Audio/Mario/Mario.mp3");
+
 	return true;
 }
 
@@ -139,7 +141,7 @@ void MarioScreen::ShakeScreen()
 }
 void MarioScreen::UpdateEnemies(float deltaTime, SDL_Event e)
 {
-	if (m_koopa_klock == 0)
+	if (m_koopa_klock <= 0 && m_koopas.size() < 6)
 	{
 		CreateKoopa(Vector2D(50, 32), 0.5f);
 		CreateKoopa(Vector2D(425, 32), 0.5f);

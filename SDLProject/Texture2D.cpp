@@ -69,7 +69,7 @@ bool Texture2D::LoadFromFile(std::string path)
 		SDL_FreeSurface(p_surface);
 	}
 	else {
-		std::cout << "Unable to create texture from surface. Error: " << IMG_GetError();
+		std::cout << "Unable to create texture from surface. Error: " << IMG_GetError() << std::endl;
 	}
 
 	return m_texture != nullptr;

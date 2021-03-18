@@ -17,6 +17,16 @@ struct Vector2D
 		x = xPos;
 		y = yPos;
 	}
+
+	bool operator==(const Vector2D& comp)
+	{
+		return x == comp.x && y == comp.y;
+	}
+
+	bool operator!=(const Vector2D& comp)
+	{
+		return !(x == comp.x && y == comp.y);
+	}
 };
 
 struct Rect2D
@@ -26,6 +36,13 @@ struct Rect2D
 	{
 		x = xPos;
 		y = yPos;
+		this->width = width;
+		this->height = height;
+	}
+	Rect2D(Vector2D pos, float width, float height)
+	{
+		x = pos.x;
+		y = pos.y;
 		this->width = width;
 		this->height = height;
 	}
@@ -47,8 +64,26 @@ enum FACING
 
 enum MOVE_TYPE
 {
-	INFANTRY,
-	ARMOUR,
-	FLYING
+	INFANTRY = 1,
+	ARMOUR = 2,
+	FLYING = 4
+};
+
+enum WEAPON_TYPE
+{
+	LANCE,
+	SWORD,
+	AXE
+};
+
+struct Tile
+{
+	int x = -1, y = -1;
+	int attackBonus = 0;
+	int defenceBonus = 0;
+	int whitelist = 0;
+	int blacklist = 0;
+	int moveCost = 1;
+	bool occupied = false;
 };
 #endif

@@ -1,12 +1,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
-#include "constants.h"
+#include "Constants.h"
 #include <iostream>
 #include "Texture2D.h"
 #include "Commons.h"
 #include "GameScreenManager.h"
-#include<stdio.h>
+#include <stdio.h>
+#include <SDL_mixer.h>
 using namespace std;
 
 // Function Prototypes
@@ -32,10 +33,9 @@ unsigned int a = SDL_GetTicks();
 unsigned int b = SDL_GetTicks();
 double delta = 0;
 
-
 int main(int argc, char* args[])
 {
-
+	srand(time(NULL));
 	// Try to create Window
 	if (InitSDL())
 	{
@@ -106,7 +106,15 @@ bool InitSDL()
 			cout << "Renderer could not initialise. Error: " << SDL_GetError();
 			return false;
 		}
+
+		// Initialise the Mixer
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+			cout << "Mixer could not init. Error: " << Mix_GetError() << endl;
+			return false;
+		}
 	}
+	return true;
 }
 
 void CloseSDL()

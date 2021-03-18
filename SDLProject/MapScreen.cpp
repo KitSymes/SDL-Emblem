@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "GameScreenManager.h"
 #include "BattleScreen.h"
+#include "SaveData.h"
 
 MapScreen::MapScreen(SDL_Renderer* renderer, GameScreenManager* gsm) : GameScreen(renderer, gsm)
 {
@@ -32,6 +33,8 @@ MapScreen::~MapScreen()
 	delete bridgeLevel;
 	delete lastSplit;
 	delete castleLevel;
+
+	SaveData::Instance()->Save("AutoSave");
 }
 
 bool MapScreen::SetUpLevel()
@@ -124,8 +127,11 @@ bool MapScreen::SetUpLevel()
 		std::cout << "Failed to load level complete texture!" << std::endl;
 	}
 
-	myChar = new Character(m_renderer, "Images/Allies/Lancer.png", Vector2D(11 * 32, 9 * 32));
+	myChar = new Character(m_renderer, "Images/Allies/Infantry/Lancer.png", Vector2D(11 * 32, 9 * 32));
 	currentPos = start;
+
+	for (Character* c : SaveData::Instance()->m_allies)
+		c->SetAlive(false);
 
 	return true;
 }
@@ -172,7 +178,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				if (currentPos->north != nullptr && (currentPos->complete || currentPos->returnDir == 0))
 				{
 					currentPos = currentPos->northPoI;
-					myChar->setPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
+					myChar->SetRawPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
 					moving = true;
 				}
 				break;
@@ -180,7 +186,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				if (currentPos->south != nullptr && (currentPos->complete || currentPos->returnDir == 2))
 				{
 					currentPos = currentPos->southPoI;
-					myChar->setPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
+					myChar->SetRawPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
 					moving = true;
 				}
 				break;
@@ -188,7 +194,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				if (currentPos->east != nullptr && (currentPos->complete || currentPos->returnDir == 1))
 				{
 					currentPos = currentPos->eastPoI;
-					myChar->setPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
+					myChar->SetRawPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
 					moving = true;
 				}
 				break;
@@ -196,7 +202,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				if (currentPos->west != nullptr && (currentPos->complete || currentPos->returnDir == 3))
 				{
 					currentPos = currentPos->westPoI;
-					myChar->setPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
+					myChar->SetRawPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
 					moving = true;
 				}
 				break;

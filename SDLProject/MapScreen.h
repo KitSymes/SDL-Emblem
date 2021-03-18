@@ -4,9 +4,11 @@
 #include "Commons.h"
 #include "GameScreen.h"
 #include <iostream>
+#include <fstream>
+#include <vector>
 class Texture2D;
 class Character;
-class MapScreen : GameScreen
+class MapScreen : public GameScreen
 {
 private:
 	Texture2D* m_background_texture;
@@ -75,5 +77,7 @@ public:
 
 	void Render() override;
 	void Update(float deltaTime, SDL_Event e) override;
+
+	void Save(std::string name);
 };
 #endif

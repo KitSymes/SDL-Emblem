@@ -10,6 +10,54 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	m_sourceY = 0;
 	m_sourceWidth = 16;
 	m_sourceHeight = 16;
+	m_animate = true;
+
+	if (!m_texture->LoadFromFile(imagePath))
+		std::cout << "Image " << imagePath << " failed to load" << std::endl;
+}
+
+Character::Character(SDL_Renderer* renderer, MOVE_TYPE move_type, WEAPON_TYPE weapon_type, bool friendly, Vector2D start_position)
+{
+	m_renderer = renderer;
+	m_position = start_position;
+	m_texture = new Texture2D(renderer, 32, 32);
+	m_sourceX = 0;
+	m_sourceY = 0;
+	m_sourceWidth = 16;
+	m_sourceHeight = 16;
+	m_animate = true;
+	m_mov_type = move_type;
+	m_weapon_type = weapon_type;
+	m_range = 2;
+	m_alive = false;
+	m_level = 1;
+	m_exp = 0;
+	m_friendly = friendly;
+
+
+	std::string imagePath = "Images/";
+	imagePath += (friendly ? "Allies" : "Enemies");
+	imagePath += "/";
+	switch (move_type)
+	{
+	case INFANTRY:
+		imagePath += "Infantry";
+		break;
+	default:
+		std::cout << "Move Type Not Handled in Character " + move_type << std::endl;
+		break;
+	}
+	imagePath += "/";
+	switch (weapon_type)
+	{
+	case LANCE:
+		imagePath += "Lancer";
+		break;
+	default:
+		std::cout << "Weapon Type Not Handled in Character " + weapon_type << std::endl;
+		break;
+	}
+	imagePath += ".png";
 
 	if (!m_texture->LoadFromFile(imagePath))
 		std::cout << "Image " << imagePath << " failed to load" << std::endl;
@@ -24,7 +72,7 @@ Character::~Character()
 
 void Character::Render()
 {
-	SDL_Rect source = {m_sourceX, m_sourceY, m_sourceWidth, m_sourceHeight};
+	SDL_Rect source = { m_sourceX, (m_animate ? m_sourceY : 0), m_sourceWidth, m_sourceHeight };
 	m_texture->Render(m_position, &source, SDL_FLIP_NONE);
 
 	frame++;
@@ -61,12 +109,32 @@ void Character::Update(float deltaTime, SDL_Event e)
 	}*/
 }
 
-void Character::setPosition(Vector2D new_position)
+void Character::SetRawPosition(Vector2D new_position)
 {
 	m_position = new_position;
 }
 
-Vector2D Character::GetPosition()
+void Character::SetMapPosition(int x, int y)
 {
-	return m_position;
+	m_map_pos = Vector2D(x, y);
+	SetRawPosition(Vector2D(x * 46 + 7, y * 46 + 7));
+}
+
+void Character::RandomStats(int level)
+{
+	m_attack = level;
+	m_defence = level/2;
+	m_max_health = 5;
+
+	for (int i = 0; i < level; i++)
+		LevelUp();
+
+	m_health = m_max_health;
+}
+
+void Character::LevelUp()
+{
+	m_attack += (rand() % 3);
+	m_defence += (rand() % 3);
+	m_max_health += (rand() % 4);
 }

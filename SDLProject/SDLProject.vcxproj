@@ -33,6 +33,7 @@
     <ClCompile Include="MarioCharacter.cpp" />
     <ClCompile Include="MarioScreen.cpp" />
     <ClCompile Include="PowBlock.cpp" />
+    <ClCompile Include="SaveData.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="MarioCharacter.h" />
     <ClInclude Include="MarioScreen.h" />
     <ClInclude Include="PowBlock.h" />
+    <ClInclude Include="SaveData.h" />
     <ClInclude Include="SDL\image_include\SDL_image.h" />
     <ClInclude Include="SDL\include\begin_code.h" />
     <ClInclude Include="SDL\include\close_code.h" />
