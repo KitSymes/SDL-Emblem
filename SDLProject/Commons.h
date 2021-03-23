@@ -2,6 +2,8 @@
 #ifndef _COMMONS_H
 #define _COMMONS_H
 
+// Structs
+
 struct Vector2D
 {
 	float x, y;
@@ -48,6 +50,19 @@ struct Rect2D
 	}
 };
 
+struct Tile
+{
+	int x = -1, y = -1;
+	int attackBonus = 0;
+	int defenceBonus = 0;
+	int whitelist = 0;
+	int blacklist = 0;
+	int moveCost = 1;
+	bool occupied = false;
+};
+
+// Enums
+
 enum SCREENS
 {
 	SCREEN_TITLE,
@@ -76,14 +91,10 @@ enum WEAPON_TYPE
 	AXE
 };
 
-struct Tile
+enum SelectedState
 {
-	int x = -1, y = -1;
-	int attackBonus = 0;
-	int defenceBonus = 0;
-	int whitelist = 0;
-	int blacklist = 0;
-	int moveCost = 1;
-	bool occupied = false;
+	SELECTED_NONE,
+	SELECTED_MOVING,
+	SELECTED_CHOICES
 };
 #endif

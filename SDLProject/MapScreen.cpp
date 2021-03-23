@@ -127,7 +127,7 @@ bool MapScreen::SetUpLevel()
 		std::cout << "Failed to load level complete texture!" << std::endl;
 	}
 
-	myChar = new Character(m_renderer, "Images/Allies/Infantry/Lancer.png", Vector2D(11 * 32, 9 * 32));
+	myChar = new Character(m_renderer, "Images/Allies/Infantry/Lancer.png", Vector2D(11 * 32 - 10, 9 * 32 - 10));
 	currentPos = start;
 
 	for (Character* c : SaveData::Instance()->m_allies)
@@ -178,7 +178,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				if (currentPos->north != nullptr && (currentPos->complete || currentPos->returnDir == 0))
 				{
 					currentPos = currentPos->northPoI;
-					myChar->SetRawPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
+					myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
 					moving = true;
 				}
 				break;
@@ -186,7 +186,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				if (currentPos->south != nullptr && (currentPos->complete || currentPos->returnDir == 2))
 				{
 					currentPos = currentPos->southPoI;
-					myChar->SetRawPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
+					myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
 					moving = true;
 				}
 				break;
@@ -194,7 +194,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				if (currentPos->east != nullptr && (currentPos->complete || currentPos->returnDir == 1))
 				{
 					currentPos = currentPos->eastPoI;
-					myChar->SetRawPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
+					myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
 					moving = true;
 				}
 				break;
@@ -202,7 +202,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				if (currentPos->west != nullptr && (currentPos->complete || currentPos->returnDir == 3))
 				{
 					currentPos = currentPos->westPoI;
-					myChar->SetRawPosition(Vector2D(currentPos->x * 32, currentPos->y * 32));
+					myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
 					moving = true;
 				}
 				break;

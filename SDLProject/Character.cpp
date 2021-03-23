@@ -5,11 +5,9 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 {
 	m_renderer = renderer;
 	m_position = start_position;
-	m_texture = new Texture2D(renderer, 32, 32);
+	m_texture = new Texture2D(renderer, EMBLEM_TILE_DIMENSION, EMBLEM_TILE_DIMENSION);
 	m_sourceX = 0;
 	m_sourceY = 0;
-	m_sourceWidth = 16;
-	m_sourceHeight = 16;
 	m_animate = true;
 
 	if (!m_texture->LoadFromFile(imagePath))
@@ -20,11 +18,9 @@ Character::Character(SDL_Renderer* renderer, MOVE_TYPE move_type, WEAPON_TYPE we
 {
 	m_renderer = renderer;
 	m_position = start_position;
-	m_texture = new Texture2D(renderer, 32, 32);
+	m_texture = new Texture2D(renderer, EMBLEM_TILE_DIMENSION, EMBLEM_TILE_DIMENSION);
 	m_sourceX = 0;
 	m_sourceY = 0;
-	m_sourceWidth = 16;
-	m_sourceHeight = 16;
 	m_animate = true;
 	m_mov_type = move_type;
 	m_weapon_type = weapon_type;
@@ -33,6 +29,7 @@ Character::Character(SDL_Renderer* renderer, MOVE_TYPE move_type, WEAPON_TYPE we
 	m_level = 1;
 	m_exp = 0;
 	m_friendly = friendly;
+	m_moved = false;
 
 
 	std::string imagePath = "Images/";
@@ -72,7 +69,7 @@ Character::~Character()
 
 void Character::Render()
 {
-	SDL_Rect source = { m_sourceX, (m_animate ? m_sourceY : 0), m_sourceWidth, m_sourceHeight };
+	SDL_Rect source = { m_sourceX, (m_animate ? m_sourceY : 0), EMBLEM_TILE_DIMENSION, EMBLEM_TILE_DIMENSION / 2 };
 	m_texture->Render(m_position, &source, SDL_FLIP_NONE);
 
 	frame++;
@@ -82,7 +79,7 @@ void Character::Render()
 	if (frame < 10)
 		m_sourceY = 0;
 	else
-		m_sourceY = 16;
+		m_sourceY = EMBLEM_TILE_DIMENSION / 2;
 }
 
 void Character::Update(float deltaTime, SDL_Event e)
@@ -117,14 +114,21 @@ void Character::SetRawPosition(Vector2D new_position)
 void Character::SetMapPosition(int x, int y)
 {
 	m_map_pos = Vector2D(x, y);
-	SetRawPosition(Vector2D(x * 46 + 7, y * 46 + 7));
+	SetRawPosition(Vector2D(x * EMBLEM_TILE_DIMENSION, y * EMBLEM_TILE_DIMENSION));
+}
+
+void Character::SetMoved(bool moved)
+{
+	m_moved = moved;
+	m_animate = !moved;
 }
 
 void Character::RandomStats(int level)
 {
 	m_attack = level;
-	m_defence = level/2;
+	m_defence = level / 2;
 	m_max_health = 5;
+	m_speed = 1;
 
 	for (int i = 0; i < level; i++)
 		LevelUp();
@@ -136,5 +140,6 @@ void Character::LevelUp()
 {
 	m_attack += (rand() % 3);
 	m_defence += (rand() % 3);
+	m_speed += (rand() % 4);
 	m_max_health += (rand() % 4);
 }

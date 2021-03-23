@@ -3,8 +3,9 @@
 #define _CHARACTER_H
 #include <SDL.h>
 #include <iostream>
-#include "Commons.h"
 #include <string>
+#include "Commons.h"
+#include "Constants.h"
 class Texture2D;
 class Character
 {
@@ -14,7 +15,6 @@ protected:
 	Texture2D* m_texture;
 	int frame = 0;
 	int m_sourceX, m_sourceY;
-	int m_sourceWidth, m_sourceHeight;
 	int m_range;
 	MOVE_TYPE m_mov_type;
 	WEAPON_TYPE m_weapon_type;
@@ -22,8 +22,9 @@ protected:
 	bool m_alive;
 	bool m_friendly;
 	Vector2D m_map_pos;
+	bool m_moved;
 public:
-	int m_attack, m_defence;
+	int m_attack, m_defence, m_speed;
 	int m_health, m_max_health;
 	int m_level;
 	int m_exp;
@@ -46,6 +47,9 @@ public:
 
 	bool IsAlive() { return m_alive; };
 	void SetAlive(bool alive) { m_alive = alive; };
+
+	bool HasMoved() { return m_moved; }
+	void SetMoved(bool moved);
 
 	MOVE_TYPE GetMoveType() { return m_mov_type; }
 	WEAPON_TYPE GetWeaponType() { return m_weapon_type; }

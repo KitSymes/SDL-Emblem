@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AStar.cpp" />
     <ClCompile Include="BattleScreen.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="MarioCharacterCoin.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="TitleScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="BattleScreen.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="MarioCharacterCoin.h" />
