@@ -8,6 +8,7 @@
 #include "GameScreenManager.h"
 #include <stdio.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 using namespace std;
 
 // Function Prototypes
@@ -113,6 +114,8 @@ bool InitSDL()
 			cout << "Mixer could not init. Error: " << Mix_GetError() << endl;
 			return false;
 		}
+
+		TTF_Init();
 	}
 	return true;
 }
@@ -130,6 +133,7 @@ void CloseSDL()
 	g_window = nullptr;
 	// Quit SDL Subsystems
 	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 }
 

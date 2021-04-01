@@ -5,8 +5,10 @@
 #include "GameScreen.h"
 #include "Constants.h"
 #include "Character.h"
+#include "Text.h"
 #include <vector>
 #include <SDL.h>
+#include <SDL_ttf.h>
 class Texture2D;
 class BattleScreen : public GameScreen
 {
@@ -17,6 +19,13 @@ private:
 	Texture2D* m_tile_cursor_texture;
 	Texture2D* m_action_background_texture;
 	Texture2D* m_action_cursor_texture;
+	TTF_Font* m_font;
+
+	// Text
+	Text* m_t_name = nullptr;
+	SDL_Texture* m_t_atk = nullptr;
+	SDL_Texture* m_t_def = nullptr;
+	SDL_Texture* m_t_hp = nullptr;
 
 	// Enemy Stuff
 	std::vector<Character*> m_enemy_units;
@@ -31,6 +40,8 @@ private:
 	SelectedState m_hovered_selected_state;
 
 	// Action UI
+	int m_move_proposed_x;
+	int m_move_proposed_y;
 	int m_action_cursor_option;
 	Vector2D m_action_ui;
 
@@ -62,5 +73,7 @@ public:
 	// Gameplay Loops
 	void PlayerTurn();
 	void EnemyTurn();
+
+	SDL_Texture* GenText(std::string s);
 };
 #endif

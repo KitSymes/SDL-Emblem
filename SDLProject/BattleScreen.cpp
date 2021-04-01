@@ -46,6 +46,9 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 		std::cout << "Failed to load Images/BattleMaps/ChoiceBackground.png texture!" << std::endl;
 	}
 
+	m_font = TTF_OpenFont("Fonts/calibri.ttf", 25);
+	m_t_name = new Text(m_renderer, m_font, "Type: ");
+
 	m_players_turn = true;
 	m_tile_cursor_animate = 1;
 	m_action_cursor_animate = 1;
@@ -148,6 +151,14 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 
 BattleScreen::~BattleScreen()
 {
+	TTF_CloseFont(m_font);
+
+	if (m_t_name != nullptr)
+	{
+		delete m_t_name;
+		m_t_name = nullptr;
+	}
+
 	delete m_background_texture;
 	m_background_texture = nullptr;
 
@@ -183,9 +194,14 @@ void BattleScreen::Render()
 {
 	m_background_texture->Render(Vector2D(), SDL_FLIP_NONE);
 
-	if (m_players_turn)
+	if (m_t_name != nullptr)
 	{
-		if (m_hovered != nullptr && (m_hovered_selected_state == SELECTED_NONE || m_hovered_selected_state == SELECTED_MOVING))
+		m_t_name->Render(Vector2D());
+	}
+
+	if (m_players_turn && m_hovered != nullptr)
+	{
+		if (m_hovered_selected_state == SELECTED_NONE || m_hovered_selected_state == SELECTED_MOVING)
 		{
 			// Draw Movement Matrix tiles
 			for (int y = 0; y < EMBLEM_MAP_DIMENSION; y++)
@@ -209,7 +225,18 @@ void BattleScreen::Render()
 						break;
 					}
 				}
-			// Draw Unit's stats
+		}
+		else if (m_hovered_selected_state == SELECTED_ATTACKING)
+		{
+			if (m_move_proposed_x - 1 >= 0)
+				RenderAttackOverlay(m_move_proposed_x - 1, m_move_proposed_y);
+			if (m_move_proposed_x + 1 < EMBLEM_MAP_DIMENSION)
+				RenderAttackOverlay(m_move_proposed_x + 1, m_move_proposed_y);
+
+			if (m_move_proposed_y - 1 >= 0)
+				RenderAttackOverlay(m_move_proposed_x, m_move_proposed_y - 1);
+			if (m_move_proposed_y + 1 < EMBLEM_MAP_DIMENSION)
+				RenderAttackOverlay(m_move_proposed_x, m_move_proposed_y + 1);
 		}
 	}
 
@@ -257,6 +284,9 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 				if (m_current_movement_matrix[(int)m_last_cursor_tile.y][(int)m_last_cursor_tile.x] == 2) // This square can be moved to
 				{
 					m_hovered_selected_state = SELECTED_CHOICES;
+					m_move_proposed_x = m_last_cursor_tile.x;
+					m_move_proposed_y = m_last_cursor_tile.y;
+
 					m_action_cursor_option = 0;
 
 					m_action_ui.x = m_hovered->GetRawPosition().x + EMBLEM_TILE_DIMENSION;
@@ -279,25 +309,41 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 			}
 			else if (m_hovered_selected_state == SELECTED_CHOICES) // Player needs to choose what this unit should do
 			{
-				// Check for button clicks
+				if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(m_action_ui.x + 20, m_action_ui.y + 20, 152, 20))) // Attack
+				{
+					m_hovered_selected_state = SELECTED_ATTACKING;
+				}
+				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(m_action_ui.x + 20, m_action_ui.y + 62, 152, 20))) // Wait
+				{
+					m_map[(int)m_hovered->GetMapPosition().y][(int)m_hovered->GetMapPosition().x].occupied = false;
+					m_hovered->SetMoved(true);
+					m_hovered->SetMapPosition(m_move_proposed_x, m_move_proposed_y);
+					m_map[(int)m_hovered->GetMapPosition().y][(int)m_hovered->GetMapPosition().x].occupied = true;
+					m_hovered_selected_state = SELECTED_NONE;
+					m_hovered = nullptr;
+				}
 			}
-			else if (m_hovered != nullptr && m_hovered->IsFriendly() && !m_hovered->HasMoved()) // Otherwise they want to move a character, so check if they can
+			else if (m_hovered_selected_state == SELECTED_NONE) // Otherwise they want to move a character, so check if they can
 			{
-				m_hovered_selected_state = SELECTED_MOVING;
+				if (m_hovered != nullptr && m_hovered->IsFriendly() && !m_hovered->HasMoved())
+					m_hovered_selected_state = SELECTED_MOVING;
 			}
 		}
-		else if (e.button.button == SDL_BUTTON_RIGHT)
+		else if (e.button.button == SDL_BUTTON_RIGHT) // Player wants to cancel
 		{
-			if (m_hovered_selected_state == SELECTED_MOVING) // Player wants to cancel
+			if (m_hovered_selected_state == SELECTED_MOVING)
 			{
 				m_hovered_selected_state = SELECTED_NONE;
 				m_hovered->SetRawPosition(Vector2D(m_hovered->GetMapPosition().x * EMBLEM_TILE_DIMENSION, m_hovered->GetMapPosition().y * EMBLEM_TILE_DIMENSION));
 				m_hovered = nullptr;
 			}
-			else if (m_hovered_selected_state == SELECTED_CHOICES) // Player wants to cancel
+			else if (m_hovered_selected_state == SELECTED_CHOICES)
 			{
 				m_hovered_selected_state = SELECTED_MOVING;
-				// Check for button clicks
+			}
+			else if (m_hovered_selected_state == SELECTED_ATTACKING)
+			{
+				m_hovered_selected_state = SELECTED_CHOICES;
 			}
 		}
 		break;
@@ -345,6 +391,13 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 						m_hovered->SetRawPosition(Vector2D(newV.x * EMBLEM_TILE_DIMENSION, newV.y * EMBLEM_TILE_DIMENSION));
 				}
 			}
+		}
+		if (m_hovered_selected_state == SELECTED_CHOICES)
+		{
+			if (m_action_cursor_option != 0 && Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(m_action_ui.x + 20, m_action_ui.y + 20, 152, 20))) // Attack
+				m_action_cursor_option = 0;
+			else if (m_action_cursor_option != 1 && Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(m_action_ui.x + 20, m_action_ui.y + 62, 152, 20))) // Wait
+				m_action_cursor_option = 1;
 		}
 	}
 }
@@ -545,4 +598,9 @@ void BattleScreen::MoveMatrixRecurse(Vector2D previousPos, Vector2D newPos, int 
 		if (newPos.x - 1 >= 0 && Vector2D(newPos.x - 1, newPos.y) != previousPos)
 			MoveMatrixRecurse(newPos, Vector2D(newPos.x - 1, newPos.y), movesLeft, c);
 	}
+}
+
+SDL_Texture* BattleScreen::GenText(std::string s)
+{
+	return nullptr;
 }
