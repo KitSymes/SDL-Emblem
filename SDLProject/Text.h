@@ -12,7 +12,8 @@ private:
 	SDL_Texture* m_texture;
 	int m_width = 0, m_height = 0;
 public:
-	Text(SDL_Renderer* renderer, TTF_Font* font, std::string text);
+	Text(SDL_Renderer* renderer, TTF_Font* font, std::string text, SDL_Color color = { 255,255,255 });
+	Text(SDL_Renderer* renderer, TTF_Font* font, std::string text, int width, SDL_Color color = { 255,255,255 });
 	~Text();
 
 	void Render(Vector2D position);

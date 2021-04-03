@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _COMMONS_H
 #define _COMMONS_H
+#include <iostream>
 
 // Structs
 

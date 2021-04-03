@@ -1,0 +1,40 @@
+﻿  AStar.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  BattleScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Character.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  MarioCharacterCoin.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  MarioCharacterKoopa.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Collisions.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  GameScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  MarioLevelMap.cpp
+  MarioPlayerLuigi.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  MapScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  GameScreenManager.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenManager.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  MarioPlayerMario.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  MarioCharacter.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  MarioScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  PowBlock.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\PowBlock.h(2,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  SaveData.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Source.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Source.cpp(1,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Text.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Text.h(5,10): fatal error C1083: Cannot open include file: 'SDL_ttf.h': No such file or directory
+  Texture2D.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  TitleScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Generating Code...

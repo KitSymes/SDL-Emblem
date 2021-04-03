@@ -23,9 +23,10 @@ private:
 
 	// Text
 	Text* m_t_name = nullptr;
-	SDL_Texture* m_t_atk = nullptr;
-	SDL_Texture* m_t_def = nullptr;
-	SDL_Texture* m_t_hp = nullptr;
+	Text* m_t_level = nullptr;
+	Text* m_t_atk = nullptr;
+	Text* m_t_def = nullptr;
+	Text* m_t_hp = nullptr;
 
 	// Enemy Stuff
 	std::vector<Character*> m_enemy_units;
@@ -73,7 +74,5 @@ public:
 	// Gameplay Loops
 	void PlayerTurn();
 	void EnemyTurn();
-
-	SDL_Texture* GenText(std::string s);
 };
 #endif

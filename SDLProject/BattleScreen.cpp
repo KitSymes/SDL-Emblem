@@ -6,6 +6,7 @@
 #include "SaveData.h"
 #include "Collisions.h"
 #include "AStar.h"
+#include "Utils.h"
 
 BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char* path) : GameScreen(renderer, gsm)
 {
@@ -46,8 +47,7 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 		std::cout << "Failed to load Images/BattleMaps/ChoiceBackground.png texture!" << std::endl;
 	}
 
-	m_font = TTF_OpenFont("Fonts/calibri.ttf", 25);
-	m_t_name = new Text(m_renderer, m_font, "Type: ");
+	m_font = TTF_OpenFont("Fonts/calibri.ttf", 15);
 
 	m_players_turn = true;
 	m_tile_cursor_animate = 1;
@@ -159,6 +159,24 @@ BattleScreen::~BattleScreen()
 		m_t_name = nullptr;
 	}
 
+	if (m_t_atk != nullptr)
+	{
+		delete m_t_atk;
+		m_t_atk = nullptr;
+	}
+
+	if (m_t_def != nullptr)
+	{
+		delete m_t_def;
+		m_t_def = nullptr;
+	}
+
+	if (m_t_hp != nullptr)
+	{
+		delete m_t_hp;
+		m_t_hp = nullptr;
+	}
+
 	delete m_background_texture;
 	m_background_texture = nullptr;
 
@@ -194,10 +212,24 @@ void BattleScreen::Render()
 {
 	m_background_texture->Render(Vector2D(), SDL_FLIP_NONE);
 
+	int xpos = 420;
+	int ypos = 50;
+	int offset = 20;
+
 	if (m_t_name != nullptr)
-	{
-		m_t_name->Render(Vector2D());
-	}
+		m_t_name->Render(Vector2D(xpos, ypos));
+
+	if (m_t_level != nullptr)
+		m_t_level->Render(Vector2D(xpos, ypos + offset));
+
+	if (m_t_atk != nullptr)
+		m_t_atk->Render(Vector2D(xpos, ypos + offset * 2));
+
+	if (m_t_def != nullptr)
+		m_t_def->Render(Vector2D(xpos, ypos + offset * 3));
+
+	if (m_t_hp != nullptr)
+		m_t_hp->Render(Vector2D(xpos, ypos + offset * 4));
 
 	if (m_players_turn && m_hovered != nullptr)
 	{
@@ -412,6 +444,13 @@ bool BattleScreen::CheckHovered(Character* c, int x, int y)
 		if (m_hovered != c)
 		{
 			m_hovered = c;
+			m_t_name = new Text(m_renderer, m_font, Utils::MoveTypeToString(c->GetMoveType()).append(" " + Utils::WeaponTypeToString(c->GetWeaponType())), 88);
+			m_t_level = new Text(m_renderer, m_font, "Lvl: " + c->m_level);
+			m_t_atk = new Text(m_renderer, m_font, "Atk: " + std::to_string(c->m_attack));
+			m_t_def = new Text(m_renderer, m_font, "Def: " + std::to_string(c->m_defence));
+			std::string str = "HP: ";
+			str.append(std::to_string(c->m_health)).append("/").append(std::to_string(c->m_max_health) + "");
+			m_t_hp = new Text(m_renderer, m_font, str);
 			UpdateMovementMatrix();
 		}
 		return true;
@@ -598,9 +637,4 @@ void BattleScreen::MoveMatrixRecurse(Vector2D previousPos, Vector2D newPos, int 
 		if (newPos.x - 1 >= 0 && Vector2D(newPos.x - 1, newPos.y) != previousPos)
 			MoveMatrixRecurse(newPos, Vector2D(newPos.x - 1, newPos.y), movesLeft, c);
 	}
-}
-
-SDL_Texture* BattleScreen::GenText(std::string s)
-{
-	return nullptr;
 }

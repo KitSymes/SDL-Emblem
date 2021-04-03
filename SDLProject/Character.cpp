@@ -1,5 +1,6 @@
 #include "Character.h"
 #include "Texture2D.h"
+#include "Utils.h"
 
 Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position)
 {
@@ -35,15 +36,7 @@ Character::Character(SDL_Renderer* renderer, MOVE_TYPE move_type, WEAPON_TYPE we
 	std::string imagePath = "Images/";
 	imagePath += (friendly ? "Allies" : "Enemies");
 	imagePath += "/";
-	switch (move_type)
-	{
-	case INFANTRY:
-		imagePath += "Infantry";
-		break;
-	default:
-		std::cout << "Move Type Not Handled in Character " + move_type << std::endl;
-		break;
-	}
+	imagePath += Utils::MoveTypeToString(move_type);
 	imagePath += "/";
 	switch (weapon_type)
 	{

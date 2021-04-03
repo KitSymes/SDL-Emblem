@@ -72,6 +72,12 @@
     <ClCompile Include="AStar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDL\image_include\SDL_image.h">
@@ -392,6 +398,15 @@
     <ClInclude Include="AStar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2\SDL\ttf_include\SDL_ttf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL2\SDL\SDL2.lib" />
@@ -399,5 +414,14 @@
     <Library Include="SDL2\SDL\SDL2_mixer.lib" />
     <Library Include="SDL2\SDL\SDL2main.lib" />
     <Library Include="SDL2\SDL\SDL2test.lib" />
+    <Library Include="SDL2\lib\x64\SDL2main.lib" />
+    <Library Include="SDL2\lib\x64\SDL2test.lib" />
+    <Library Include="SDL2\SDL\SDL2_ttf.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SDL2\lib\x64\SDL2.dll" />
+    <None Include="SDL2\SDL\libfreetype-6.dll" />
+    <None Include="SDL2\SDL\SDL2_ttf.dll" />
+    <None Include="SDL2\SDL\zlib1.dll" />
   </ItemGroup>
 </Project>
