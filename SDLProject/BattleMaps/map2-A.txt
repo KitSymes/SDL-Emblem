@@ -1,4 +1,4 @@
-Images/BattleMaps/Map2.png
+Images/BattleMaps/MapForest.png
 forestLevelClear
 1 2 1 1 1 2 2 1
 2 1 1 2 1 1 1 1

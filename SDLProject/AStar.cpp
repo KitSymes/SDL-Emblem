@@ -93,9 +93,9 @@ vector<AStar::Node> AStar::aStar(Tile map[EMBLEM_MAP_DIMENSION][EMBLEM_MAP_DIMEN
 	array<array < Node, EMBLEM_MAP_DIMENSION>, EMBLEM_MAP_DIMENSION> allMap;
 	for (int x = 0; x < EMBLEM_MAP_DIMENSION; x++) {
 		for (int y = 0; y < EMBLEM_MAP_DIMENSION; y++) {
-			allMap[x][y].fCost = 999;
-			allMap[x][y].gCost = 999;
-			allMap[x][y].hCost = 999;
+			allMap[x][y].fCost = FLT_MAX;
+			allMap[x][y].gCost = FLT_MAX;
+			allMap[x][y].hCost = FLT_MAX;
 			allMap[x][y].parentX = -1;
 			allMap[x][y].parentY = -1;
 			allMap[x][y].x = x;
@@ -121,7 +121,7 @@ vector<AStar::Node> AStar::aStar(Tile map[EMBLEM_MAP_DIMENSION][EMBLEM_MAP_DIMEN
 	while (!openList.empty() && openList.size() < EMBLEM_MAP_DIMENSION * EMBLEM_MAP_DIMENSION) {
 		Node node;
 		do {
-			float temp = 999;
+			float temp = FLT_MAX;
 			vector<Node>::iterator itNode;
 			for (vector<Node>::iterator it = openList.begin();
 				it != openList.end(); it = next(it)) {
@@ -174,7 +174,7 @@ vector<AStar::Node> AStar::aStar(Tile map[EMBLEM_MAP_DIMENSION][EMBLEM_MAP_DIMEN
 						hNew = calculateH(x + newX, y + newY, dest);
 						fNew = gNew + hNew;
 						// Check if this path is better than the one already present
-						if (allMap[x + newX][y + newY].fCost == 999 ||
+						if (allMap[x + newX][y + newY].fCost == FLT_MAX ||
 							allMap[x + newX][y + newY].fCost > fNew)
 						{
 							// Update the details of this neighbour node

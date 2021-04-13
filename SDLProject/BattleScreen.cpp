@@ -92,11 +92,14 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 			inFile >> tileType;
 			switch (tileType)
 			{
-			case 2:
+			case 1: // Regular Tile
+				break;
+			case 2: // Forest Tile
 				m_map[y][x].moveCost = 2;
 				m_map[y][x].defenceBonus = 1;
 				break;
-			case 1:
+			case 3: // Inaccesable Tile
+				m_map[y][x].moveCost = 999;
 				break;
 			default:
 				std::cout << "Unrecognised Tile Type " << tileType << " in " << path << std::endl;
@@ -114,7 +117,7 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 		inFile >> x;
 		inFile >> y;
 
-		Character* ally = SaveData::Instance()->m_allies.at(i);
+		Character* ally = SaveData::Instance()->m_allies[i];
 
 		ally->SetAlive(true);
 		ally->SetMoved(false);
@@ -310,7 +313,27 @@ void BattleScreen::Render()
 		}
 		else if (m_hovered_selected_state == SELECTED_ATTACKING && m_phase != PHASE_ATTACKING)
 		{
-			if (m_move_proposed_x - 1 >= 0)
+			for (int x = -(m_hovered->GetRange()); x <= m_hovered->GetRange(); x++) // Modified from MoveMatrixRecurse
+			{
+				if (0 <= m_move_proposed_x + x && m_move_proposed_x + x < EMBLEM_MAP_DIMENSION)
+				{
+					int absX = abs(x);
+					int theY = m_move_proposed_y + (m_hovered->GetRange() - absX);
+
+					if (0 <= theY && theY < EMBLEM_MAP_DIMENSION) // Valid tile so render overlay
+						RenderAttackOverlay(m_move_proposed_x + x, theY);
+
+					if (theY == m_move_proposed_y - (m_hovered->GetRange() - absX))
+						continue;
+
+					theY = m_move_proposed_y - (m_hovered->GetRange() - absX);
+
+					if (0 <= theY && theY < EMBLEM_MAP_DIMENSION) // Valid tile so render overlay
+						RenderAttackOverlay(m_move_proposed_x + x, theY);
+
+				}
+			}
+			/*if (m_move_proposed_x - 1 >= 0)
 				RenderAttackOverlay(m_move_proposed_x - 1, m_move_proposed_y);
 			if (m_move_proposed_x + 1 < EMBLEM_MAP_DIMENSION)
 				RenderAttackOverlay(m_move_proposed_x + 1, m_move_proposed_y);
@@ -318,7 +341,7 @@ void BattleScreen::Render()
 			if (m_move_proposed_y - 1 >= 0)
 				RenderAttackOverlay(m_move_proposed_x, m_move_proposed_y - 1);
 			if (m_move_proposed_y + 1 < EMBLEM_MAP_DIMENSION)
-				RenderAttackOverlay(m_move_proposed_x, m_move_proposed_y + 1);
+				RenderAttackOverlay(m_move_proposed_x, m_move_proposed_y + 1);*/
 
 			if (m_attack_target != nullptr)
 			{
@@ -558,7 +581,6 @@ void BattleScreen::Render()
 								{
 									int distance = -1;
 									AStar::Node temp;
-									std::cout << "new unit" << std::endl;
 									for (int x = -(enemy->GetRange()); x <= enemy->GetRange(); x++) // Modified from MoveMatrixRecurse
 									{
 										if (distance == 0)
@@ -568,7 +590,6 @@ void BattleScreen::Render()
 										{
 											int absX = abs(x);
 											int theY = player->GetMapPosition().y + (enemy->GetRange() - absX);
-											//std::cout << "checking x" << player->GetMapPosition().x + x << " y" << theY << std::endl;
 
 											if (0 <= theY && theY < EMBLEM_MAP_DIMENSION) // Valid tile so calculate distance
 											{
@@ -586,7 +607,6 @@ void BattleScreen::Render()
 													int newDist = path.at(path.size() - 2).gCost + 1;
 													if (distance == -1 || newDist < distance)
 													{
-														//std::cout << newDist << std::endl;
 														distance = newDist;
 														nodePlayer.x = player->GetMapPosition().x + x;
 														nodePlayer.y = theY;
@@ -595,7 +615,6 @@ void BattleScreen::Render()
 											}
 
 											theY = player->GetMapPosition().y - (enemy->GetRange() - absX);
-											//std::cout << "checking x" << player->GetMapPosition().x + x << " y" << theY << std::endl;
 
 											if (0 <= theY && theY < EMBLEM_MAP_DIMENSION) // Valid tile so calculate distance
 											{
@@ -613,7 +632,6 @@ void BattleScreen::Render()
 													int newDist = path.at(path.size() - 2).gCost + 1;
 													if (distance == -1 || newDist < distance)
 													{
-														//std::cout << newDist << std::endl;
 														distance = newDist;
 														nodePlayer.x = player->GetMapPosition().x + x;
 														nodePlayer.y = theY;
@@ -649,11 +667,9 @@ void BattleScreen::Render()
 							}
 						/*std::cout << "Shortest path for unit is " << finalTargetDistance << " tiles long: " << std::endl;
 						for (int i = 0; i < m_finalPath.size() - 1; i++)
-							std::cout << "(x" << m_finalPath.at(i).x << " y" << m_finalPath.at(i).y << ")" << std::endl;
-						ExhaustUnit(enemy);*/
+							std::cout << "(x" << m_finalPath.at(i).x << " y" << m_finalPath.at(i).y << ")" << std::endl;*/
 
 						m_enemy_mov_points = enemy->GetMoves();
-
 						m_phase = PHASE_MOVING;
 						break;
 					}
@@ -760,8 +776,17 @@ void BattleScreen::Render()
 		else
 		{
 			int step = 4;
-			int xDir = (attacker->GetMapPosition().y == defender->GetMapPosition().y ? attacker->GetMapPosition().x < defender->GetMapPosition().x ? 1 : -1 : 0);
-			int yDir = (attacker->GetMapPosition().x == defender->GetMapPosition().x ? attacker->GetMapPosition().y < defender->GetMapPosition().y ? 1 : -1 : 0);
+			int xDir = 0;// = (attacker->GetMapPosition().y == defender->GetMapPosition().y ? attacker->GetMapPosition().x < defender->GetMapPosition().x ? 1 : -1 : 0);
+			if (attacker->GetMapPosition().x < defender->GetMapPosition().x)
+				xDir = 1;
+			else if (attacker->GetMapPosition().x > defender->GetMapPosition().x)
+				xDir = -1;
+			int yDir = 0;// = (attacker->GetMapPosition().x == defender->GetMapPosition().x ? attacker->GetMapPosition().y < defender->GetMapPosition().y ? 1 : -1 : 0);
+			if (attacker->GetMapPosition().y < defender->GetMapPosition().y)
+				yDir = 1;
+			else if (attacker->GetMapPosition().y > defender->GetMapPosition().y)
+				yDir = -1;
+
 			if (m_phase_timer <= 10) // 0-10
 				attacker->SetRawPosition(Vector2D(attacker->GetRawPosition().x + step * xDir, attacker->GetRawPosition().y + step * yDir));
 			else // 11-20
@@ -803,7 +828,7 @@ void BattleScreen::Render()
 		if (m_phase_timer >= m_phase_int * 10 + 5)
 		{
 			m_hovered->m_exp = m_exp_new;
-			while (m_hovered->m_exp > 10)
+			while (m_hovered->m_exp >= 10)
 			{
 				m_hovered->m_exp -= 10;
 				m_hovered->LevelUp();
@@ -1030,7 +1055,31 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 				{
 					bool lastCursorIsAttackable = false;
 
-					if (m_move_proposed_x - 1 >= 0)
+
+					for (int x = -(m_hovered->GetRange()); x <= m_hovered->GetRange(); x++) // Modified from MoveMatrixRecurse
+					{
+						if (0 <= m_move_proposed_x + x && m_move_proposed_x + x < EMBLEM_MAP_DIMENSION)
+						{
+							int absX = abs(x);
+							int theY = m_move_proposed_y + (m_hovered->GetRange() - absX);
+
+							if (0 <= theY && theY < EMBLEM_MAP_DIMENSION) // Valid Tile
+								if (m_last_cursor_tile == Vector2D(m_move_proposed_x + x, theY)) // Tile is selected so attackable
+									lastCursorIsAttackable = true;
+
+							if (theY == m_move_proposed_y - (m_hovered->GetRange() - absX))
+								continue;
+
+							theY = m_move_proposed_y - (m_hovered->GetRange() - absX);
+
+							if (0 <= theY && theY < EMBLEM_MAP_DIMENSION) // Valid Tile
+								if (m_last_cursor_tile == Vector2D(m_move_proposed_x + x, theY)) // Tile is selected so attackable
+									lastCursorIsAttackable = true;
+
+						}
+					}
+
+					/*if (m_move_proposed_x - 1 >= 0)
 						if (m_last_cursor_tile.x == m_move_proposed_x - 1 && m_last_cursor_tile.y == m_move_proposed_y)
 							lastCursorIsAttackable = true;
 
@@ -1047,26 +1096,33 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 					if (!lastCursorIsAttackable)
 						if (m_move_proposed_y + 1 < EMBLEM_MAP_DIMENSION)
 							if (m_last_cursor_tile.x == m_move_proposed_x && m_last_cursor_tile.y == m_move_proposed_y + 1)
-								lastCursorIsAttackable = true;
+								lastCursorIsAttackable = true;*/
 
 					if (lastCursorIsAttackable) // Player is hovering over a square they want to attack
 					{
 						if (m_map[(int)m_last_cursor_tile.y][(int)m_last_cursor_tile.x].occupied) // There is a unit on this tile, friendly check will be done "on attack confirm"
 						{
 							Character* unit = GetUnitOnTile(m_last_cursor_tile);
-							if (unit != m_hovered && unit != m_attack_target)
+							if (unit != m_hovered)
 							{
-								if (m_damage != nullptr)
-									delete m_damage;
-								m_attack_target = unit;
-								m_attack_target->UpdateText(m_font, GetTile(m_attack_target));
-								int hpAfterAttack = m_attack_target->m_health - m_hovered->GetDamageResult(m_attack_target, GetTile(m_attack_target), GetTile(m_hovered));
-								if (hpAfterAttack < 0)
-									hpAfterAttack = 0;
-								std::string text = std::to_string(m_attack_target->m_health).append(" -> ").append(std::to_string(hpAfterAttack));
-								m_damage = new Text(m_renderer, m_font, text);
+								if (unit != m_attack_target)
+								{
+									if (m_damage != nullptr)
+										delete m_damage;
+									m_attack_target = unit;
+									m_attack_target->UpdateText(m_font, GetTile(m_attack_target));
+									int hpAfterAttack = m_attack_target->m_health - m_hovered->GetDamageResult(m_attack_target, GetTile(m_attack_target), GetTile(m_hovered));
+									if (hpAfterAttack < 0)
+										hpAfterAttack = 0;
+									std::string text = std::to_string(m_attack_target->m_health).append(" -> ").append(std::to_string(hpAfterAttack));
+									m_damage = new Text(m_renderer, m_font, text);
+								}
 							}
+							else
+								m_attack_target = nullptr;
 						}
+						else
+							m_attack_target = nullptr;
 					}
 					else
 						m_attack_target = nullptr;

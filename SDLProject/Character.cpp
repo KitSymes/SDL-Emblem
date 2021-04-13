@@ -117,26 +117,6 @@ void Character::Render()
 
 void Character::Update(float deltaTime, SDL_Event e)
 {
-	/*switch (e.type)
-	{
-	case SDL_KEYDOWN:
-		switch (e.key.keysym.sym)
-		{
-		case SDLK_a:
-			m_position.x -= 32;
-			break;
-		case SDLK_d:
-			m_position.x += 32;
-			break;
-		case SDLK_w:
-			m_position.y -= 32;
-			break;
-		case SDLK_s:
-			m_position.y += 32;
-			break;
-		}
-		break;
-	}*/
 }
 
 void Character::UpdateText(TTF_Font* font)
@@ -220,8 +200,10 @@ void Character::LevelUp()
 	m_attack += (rand() % 2) + 1;
 	if (m_friendly)
 		m_attack++;
+	if (m_weapon_type == BOW)
+		m_attack += (rand() % 1);
 	m_defence += (rand() % 1) + 1;
-	if (m_mov_type == ARMOUR)
+	if (m_weapon_type != BOW)
 		m_defence++;
 	m_speed += (rand() % 3) + 1;
 	int extraHealth = (rand() % 3) + 1;

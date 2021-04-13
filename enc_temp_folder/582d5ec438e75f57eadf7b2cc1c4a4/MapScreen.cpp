@@ -37,8 +37,6 @@ MapScreen::~MapScreen()
 
 	delete m_background_texture;
 	m_background_texture = nullptr;
-	delete myChar;
-	myChar = nullptr;
 	delete m_levelLocked_texture;
 	m_levelLocked_texture = nullptr;
 	delete m_levelUnlocked_texture;
@@ -250,7 +248,8 @@ bool MapScreen::SetUpLevel()
 		currentPos = caveLevel;
 		break;
 	}
-	myChar = new Character(m_renderer, "Images/Allies/Infantry/Lancer.png", Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+	//myChar = new Character(m_renderer, "Images/Allies/Infantry/Lancer.png", Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+	SaveData::Instance()->m_allies[0]->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
 
 	if (SaveData::Instance()->firstLevelClear)
 	{
@@ -348,16 +347,24 @@ void MapScreen::Render()
 			switch (m_current_path->at(m_index))
 			{
 			case 0:
-				myChar->SetRawPosition(Vector2D(myChar->GetRawPosition().x, myChar->GetRawPosition().y - step));
+				SaveData::Instance()->m_allies[0]->SetRawPosition(Vector2D(
+					SaveData::Instance()->m_allies[0]->GetRawPosition().x,
+					SaveData::Instance()->m_allies[0]->GetRawPosition().y - step));
 				break;
 			case 1:
-				myChar->SetRawPosition(Vector2D(myChar->GetRawPosition().x + step, myChar->GetRawPosition().y));
+				SaveData::Instance()->m_allies[0]->SetRawPosition(Vector2D(
+					SaveData::Instance()->m_allies[0]->GetRawPosition().x + step,
+					SaveData::Instance()->m_allies[0]->GetRawPosition().y));
 				break;
 			case 2:
-				myChar->SetRawPosition(Vector2D(myChar->GetRawPosition().x, myChar->GetRawPosition().y + step));
+				SaveData::Instance()->m_allies[0]->SetRawPosition(Vector2D(
+					SaveData::Instance()->m_allies[0]->GetRawPosition().x,
+					SaveData::Instance()->m_allies[0]->GetRawPosition().y + step));
 				break;
 			case 3:
-				myChar->SetRawPosition(Vector2D(myChar->GetRawPosition().x - step, myChar->GetRawPosition().y));
+				SaveData::Instance()->m_allies[0]->SetRawPosition(Vector2D(
+					SaveData::Instance()->m_allies[0]->GetRawPosition().x - step,
+					SaveData::Instance()->m_allies[0]->GetRawPosition().y));
 				break;
 			default:
 				std::cout << "ERROR IN PATH, INVALID VALUE GIVEN: " << m_current_path->at(m_index) << std::endl;
@@ -366,7 +373,7 @@ void MapScreen::Render()
 			m_timer++;
 		}
 	}
-	myChar->Render();
+	SaveData::Instance()->m_allies[0]->Render();
 
 	if (m_menu == MENU_TITLE)
 	{
