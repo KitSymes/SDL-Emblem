@@ -388,6 +388,24 @@ void MapScreen::Render()
 		if (!sa)
 			m_empty->Render(Vector2D(277, 298));
 	}
+	else if (m_menu == MENU_EXTRA)
+	{
+		int i = 0;
+		for (Character* c : SaveData::Instance()->m_allies)
+		{
+			Vector2D vec = c->GetRawPosition();
+
+			SDL_Rect source = { 180, 0, 60, 62 };
+			SDL_Rect dest = { vec.x + 10, vec.y - 38, 60 * 2, 62 * 2 };
+			m_ui_textures->Render(&source, &dest, SDL_FLIP_NONE);
+
+			c->Render();
+			vec.x += 45;
+			vec.y -= 33;
+			c->RenderText(vec);
+			i++;
+		}
+	}
 }
 
 void MapScreen::Update(float deltaTime, SDL_Event e)
@@ -479,6 +497,14 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 			if (m_menu == MENU_TITLE) {
 				if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 82, m_buttonWidth, m_buttonHeight))) // Party Button
 				{
+					int i = 0;
+					for (Character* c : SaveData::Instance()->m_allies)
+					{
+						c->SetMoved(false);
+						c->SetRawPosition(Vector2D(-9 + i * 130, 100));
+						c->UpdateText(m_font);
+						i++;
+					}
 					m_menu = MENU_EXTRA;
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 146, m_buttonWidth, m_buttonHeight))) // Save Button

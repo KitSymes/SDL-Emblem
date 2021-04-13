@@ -23,6 +23,7 @@ private:
 	Texture2D* m_action_cursor_texture;
 	Texture2D* m_sparks_texture;
 	Texture2D* m_bars_texture;
+	Texture2D* m_icons_texture;
 
 	TTF_Font* m_font;
 

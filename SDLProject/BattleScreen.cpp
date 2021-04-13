@@ -65,6 +65,12 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 		std::cout << "Failed to load Images/BattleMaps/Bars.png texture!" << std::endl;
 	}
 
+	m_icons_texture = new Texture2D(m_renderer, 10, 10);
+	if (!m_icons_texture->LoadFromFile("Images/BattleMaps/Icons.png"))
+	{
+		std::cout << "Failed to load Images/BattleMaps/Icons.png texture!" << std::endl;
+	}
+
 	m_font = TTF_OpenFont("Fonts/calibri.ttf", 15);
 
 	m_players_turn = true;
@@ -228,6 +234,9 @@ BattleScreen::~BattleScreen()
 
 	delete m_bars_texture;
 	m_bars_texture = nullptr;
+
+	delete m_icons_texture;
+	m_icons_texture = nullptr;
 }
 
 Character* BattleScreen::GetUnitOnTile(Vector2D tile)
@@ -315,11 +324,67 @@ void BattleScreen::Render()
 			{
 				m_attack_target->RenderText(Vector2D(440, 250));
 
+				if (Utils::IsEffective(m_hovered->GetWeaponType(), m_attack_target->GetWeaponType()))
+				{
+					SDL_Rect source = { 10,0,10,10 };
+					m_icons_texture->Render(Vector2D(425, 271), &source, SDL_FLIP_NONE);
+				}
+				else if (Utils::IsIneffective(m_hovered->GetWeaponType(), m_attack_target->GetWeaponType()))
+				{
+					SDL_Rect source = { 0,0,10,10 };
+					m_icons_texture->Render(Vector2D(425, 271), &source, SDL_FLIP_NONE);
+				}
+
+				if (GetTile(m_attack_target)->attackBonus > 0)
+				{
+					SDL_Rect source = { 0,0,10,10 };
+					m_icons_texture->Render(Vector2D(425, 312), &source, SDL_FLIP_NONE);
+				}
+				else if (GetTile(m_attack_target)->attackBonus < 0)
+				{
+					SDL_Rect source = { 10,0,10,10 };
+					m_icons_texture->Render(Vector2D(425, 312), &source, SDL_FLIP_NONE);
+				}
+
+				if (GetTile(m_attack_target)->defenceBonus > 0)
+				{
+					SDL_Rect source = { 0,0,10,10 };
+					m_icons_texture->Render(Vector2D(425, 332), &source, SDL_FLIP_NONE);
+				}
+				else if (GetTile(m_attack_target)->defenceBonus < 0)
+				{
+					SDL_Rect source = { 10,0,10,10 };
+					m_icons_texture->Render(Vector2D(425, 332), &source, SDL_FLIP_NONE);
+				}
+
 				if (m_damage != nullptr)
 					m_damage->Render(Vector2D(445, 365));
 			}
 		}
+
 		m_hovered->RenderText(Vector2D(440, 50));
+
+		if (m_map[m_move_proposed_y][m_move_proposed_x].attackBonus > 0)
+		{
+			SDL_Rect source = { 0,0,10,10 };
+			m_icons_texture->Render(Vector2D(425, 112), &source, SDL_FLIP_NONE);
+		}
+		else if (m_map[m_move_proposed_y][m_move_proposed_x].attackBonus < 0)
+		{
+			SDL_Rect source = { 10,0,10,10 };
+			m_icons_texture->Render(Vector2D(425, 112), &source, SDL_FLIP_NONE);
+		}
+
+		if (m_map[m_move_proposed_y][m_move_proposed_x].defenceBonus > 0)
+		{
+			SDL_Rect source = { 0,0,10,10 };
+			m_icons_texture->Render(Vector2D(425, 132), &source, SDL_FLIP_NONE);
+		}
+		else if (m_map[m_move_proposed_y][m_move_proposed_x].defenceBonus < 0)
+		{
+			SDL_Rect source = { 10,0,10,10 };
+			m_icons_texture->Render(Vector2D(425, 132), &source, SDL_FLIP_NONE);
+		}
 	}
 
 	for (Character* c : m_enemy_units)
@@ -843,8 +908,6 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 				if (m_current_movement_matrix[(int)m_last_cursor_tile.y][(int)m_last_cursor_tile.x] == 2) // This square can be moved to
 				{
 					m_hovered_selected_state = SELECTED_CHOICES;
-					m_move_proposed_x = m_last_cursor_tile.x;
-					m_move_proposed_y = m_last_cursor_tile.y;
 
 					m_action_cursor_option = 0;
 
@@ -870,6 +933,7 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 			{
 				if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(m_action_ui.x + 20, m_action_ui.y + 20, 152, 20))) // Attack
 				{
+					m_hovered->UpdateText(m_font, &m_map[m_move_proposed_y][m_move_proposed_x]);
 					m_hovered_selected_state = SELECTED_ATTACKING;
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(m_action_ui.x + 20, m_action_ui.y + 62, 152, 20))) // Wait
@@ -914,6 +978,9 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 			}
 			else if (m_hovered_selected_state == SELECTED_ATTACKING)
 			{
+				m_move_proposed_x = m_hovered->GetMapPosition().x;
+				m_move_proposed_y = m_hovered->GetMapPosition().y;
+				m_hovered->UpdateText(m_font, GetTile(m_hovered));
 				m_hovered_selected_state = SELECTED_CHOICES;
 			}
 		}
@@ -937,7 +1004,9 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 						else if (m_hovered != unit)
 						{
 							m_hovered = unit;
-							m_hovered->UpdateText(m_font);
+							m_hovered->UpdateText(m_font, GetTile(m_hovered));
+							m_move_proposed_x = m_last_cursor_tile.x;
+							m_move_proposed_y = m_last_cursor_tile.y;
 							UpdateMovementMatrix();
 						}
 					}
@@ -950,7 +1019,12 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 				else if (m_hovered_selected_state == SELECTED_MOVING) // Player wants to move their character
 				{
 					if (m_current_movement_matrix[(int)newV.y][(int)newV.x] == 2)
+					{
 						m_hovered->SetRawPosition(Vector2D(newV.x * EMBLEM_TILE_DIMENSION, newV.y * EMBLEM_TILE_DIMENSION));
+						m_move_proposed_x = m_last_cursor_tile.x;
+						m_move_proposed_y = m_last_cursor_tile.y;
+						m_hovered->UpdateText(m_font, &m_map[m_move_proposed_y][m_move_proposed_x]);
+					}
 				}
 				else if (m_hovered_selected_state == SELECTED_ATTACKING && m_phase == PHASE_IDLE) // Player wants to attack a character
 				{
@@ -980,12 +1054,12 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 						if (m_map[(int)m_last_cursor_tile.y][(int)m_last_cursor_tile.x].occupied) // There is a unit on this tile, friendly check will be done "on attack confirm"
 						{
 							Character* unit = GetUnitOnTile(m_last_cursor_tile);
-							if (unit != m_attack_target)
+							if (unit != m_hovered && unit != m_attack_target)
 							{
 								if (m_damage != nullptr)
 									delete m_damage;
 								m_attack_target = unit;
-								m_attack_target->UpdateText(m_font);
+								m_attack_target->UpdateText(m_font, GetTile(m_attack_target));
 								int hpAfterAttack = m_attack_target->m_health - m_hovered->GetDamageResult(m_attack_target, GetTile(m_attack_target), GetTile(m_hovered));
 								if (hpAfterAttack < 0)
 									hpAfterAttack = 0;
@@ -1172,7 +1246,7 @@ void BattleScreen::PlayerTurn()
 		{
 			m_last_cursor_tile = c->GetMapPosition();
 			m_hovered = c;
-			m_hovered->UpdateText(m_font);
+			m_hovered->UpdateText(m_font, GetTile(m_hovered));
 			UpdateMovementMatrix();
 			break;
 		}

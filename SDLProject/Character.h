@@ -54,6 +54,7 @@ public:
 	virtual void Update(float deltaTime, SDL_Event e);
 
 	void UpdateText(TTF_Font* font);
+	void UpdateText(TTF_Font* font, Tile* tile);
 	void RenderText(Vector2D pos);
 
 	void RandomStats(int level);

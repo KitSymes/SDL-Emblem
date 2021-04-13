@@ -84,6 +84,7 @@ void TitleScreen::Update(float deltaTime, SDL_Event e)
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 178, m_buttonWidth, m_buttonHeight)))
 				{
+					SaveData::Instance()->DefaultValues();
 					Character* first = new Character(m_renderer, INFANTRY, LANCE, true, Vector2D());
 					first->RandomStats(2);
 					//first->m_attack = 99;

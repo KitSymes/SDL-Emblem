@@ -1,12 +1,11 @@
-Character 1 0 2 0 8 6 2
-Character 1 0 2 0 8 6 2
-Character 1 0 2 0 8 6 2
-Character 1 0 2 0 8 6 2
-Bool firstLevelClear 0
-Bool forestLevelClear 0
+Character 1 0 3 8 10 7 3
+Character 1 1 4 2 13 10 4
+Character 1 2 3 0 13 7 3
+Bool firstLevelClear 1
+Bool forestLevelClear 1
 Bool alternateLevelClear 0
 Bool bridgeLevelClear 0
 Bool castleLevelClear 0
 Bool caveLevelClear 0
-Int lastMap 1
-Int returnDir 2
+Int lastMap 2
+Int returnDir 3

@@ -151,6 +151,18 @@ void Character::UpdateText(TTF_Font* font)
 	m_t_hp = new Text(m_renderer, font, str);
 }
 
+void Character::UpdateText(TTF_Font* font, Tile* tile)
+{
+	DeleteText();
+	m_t_name = new Text(m_renderer, font, Utils::MoveTypeToString(m_mov_type).append(" " + Utils::WeaponTypeToString(m_weapon_type)), 88);
+	m_t_level = new Text(m_renderer, font, "Lvl: " + std::to_string(m_level));
+	m_t_atk = new Text(m_renderer, font, "Atk: " + std::to_string(m_attack + tile->attackBonus));
+	m_t_def = new Text(m_renderer, font, "Def: " + std::to_string(m_defence + tile->defenceBonus));
+	std::string str = "HP: ";
+	str.append(std::to_string(m_health)).append("/").append(std::to_string(m_max_health) + "");
+	m_t_hp = new Text(m_renderer, font, str);
+}
+
 void Character::RenderText(Vector2D pos)
 {
 	int offset = 20;
@@ -233,42 +245,10 @@ int Character::GetDamageResult(Character* defender, Tile* theirs, Tile* mine)
 {
 	float multi = 1;
 
-	switch (m_weapon_type)
-	{
-	case LANCE:
-		switch (defender->GetWeaponType())
-		{
-		case AXE:
-			multi = 0.75;
-			break;
-		case SWORD:
-			multi = 1.5;
-			break;
-		}
-		break;
-	case AXE:
-		switch (defender->GetWeaponType())
-		{
-		case SWORD:
-			multi = 0.75;
-			break;
-		case LANCE:
-			multi = 1.5;
-			break;
-		}
-		break;
-	case SWORD:
-		switch (defender->GetWeaponType())
-		{
-		case LANCE:
-			multi = 0.75;
-			break;
-		case AXE:
-			multi = 1.5;
-			break;
-		}
-		break;
-	}
+	if (Utils::IsEffective(m_weapon_type, defender->GetWeaponType()))
+		multi = 1.5;
+	else if (Utils::IsIneffective(m_weapon_type, defender->GetWeaponType()))
+		multi = 0.75;
 
 	switch (m_weapon_type)
 	{
@@ -276,7 +256,7 @@ int Character::GetDamageResult(Character* defender, Tile* theirs, Tile* mine)
 	case AXE:
 	case SWORD:
 	case BOW:
-		int damage = (m_attack + mine->attackBonus + (m_attack < 5 ? 2 : 0)) - (defender->m_defence + theirs->defenceBonus);
+		int damage = (m_attack + mine->attackBonus + (multi > 1 ? (m_attack < 5 ? 2 : 0) : 0)) - (defender->m_defence + theirs->defenceBonus);
 		if (damage < 0)
 			damage = 0;
 		damage *= multi;

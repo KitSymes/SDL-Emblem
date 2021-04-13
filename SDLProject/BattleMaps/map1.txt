@@ -11,4 +11,4 @@ firstLevelClear
 1
 4 5
 4 3 Infantry Lancer 1 1
-7 3 Infantry Lancer 1 1
+7 3 Infantry Swordsman 2 2

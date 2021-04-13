@@ -10,6 +10,7 @@ SaveData::SaveData()
 
 void SaveData::DefaultValues()
 {
+	m_allies.clear();
 	firstLevelClear = false;
 	forestLevelClear = false;
 	alternateLevelClear = false;
@@ -39,29 +40,29 @@ void SaveData::CompleteMap(std::string name, SDL_Renderer* renderer)
 	{
 		if (!firstLevelClear)
 		{
-			Character* first = new Character(renderer, INFANTRY, SWORD, true, Vector2D());
-			first->RandomStats(3);
-			SaveData::Instance()->m_allies.push_back(first);
+			Character* unit = new Character(renderer, INFANTRY, SWORD, true, Vector2D());
+			unit->RandomStats(3);
+			SaveData::Instance()->m_allies.push_back(unit);
 		}
 		firstLevelClear = true;
 	}
 	else if (name == "forestLevelClear")
 	{
-		if (!firstLevelClear)
+		if (!forestLevelClear)
 		{
-			Character* first = new Character(renderer, INFANTRY, AXE, true, Vector2D());
-			first->RandomStats(3);
-			SaveData::Instance()->m_allies.push_back(first);
+			Character* unit = new Character(renderer, INFANTRY, AXE, true, Vector2D());
+			unit->RandomStats(3);
+			SaveData::Instance()->m_allies.push_back(unit);
 		}
 		forestLevelClear = true;
 	}
 	else if (name == "alternateLevelClear")
 	{
-		if (!firstLevelClear)
+		if (!alternateLevelClear)
 		{
-			Character* first = new Character(renderer, INFANTRY, BOW, true, Vector2D());
-			first->RandomStats(3);
-			SaveData::Instance()->m_allies.push_back(first);
+			Character* unit = new Character(renderer, INFANTRY, BOW, true, Vector2D());
+			unit->RandomStats(3);
+			SaveData::Instance()->m_allies.push_back(unit);
 		}
 		alternateLevelClear = true;
 	}

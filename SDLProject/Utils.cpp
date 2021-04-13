@@ -44,3 +44,67 @@ bool Utils::exists(const std::string& name) {
 		return false;
 	}
 }
+
+bool Utils::IsEffective(WEAPON_TYPE attacker, WEAPON_TYPE defender)
+{
+	switch (attacker)
+	{
+	case LANCE:
+		switch (defender)
+		{
+		case SWORD:
+			return true;
+			break;
+		}
+		break;
+	case AXE:
+		switch (defender)
+		{
+		case LANCE:
+			return true;
+			break;
+		}
+		break;
+	case SWORD:
+		switch (defender)
+		{
+		case AXE:
+			return true;
+			break;
+		}
+		break;
+	}
+	return false;
+}
+
+bool Utils::IsIneffective(WEAPON_TYPE attacker, WEAPON_TYPE defender)
+{
+	switch (attacker)
+	{
+	case LANCE:
+		switch (defender)
+		{
+		case AXE:
+			return true;
+			break;
+		}
+		break;
+	case AXE:
+		switch (defender)
+		{
+		case SWORD:
+			return true;
+			break;
+		}
+		break;
+	case SWORD:
+		switch (defender)
+		{
+		case LANCE:
+			return true;
+			break;
+		}
+		break;
+	}
+	return false;
+}
