@@ -1,0 +1,10 @@
+Character 1 0 4 4 14 105 4
+Character 1 0 3 4 12 102 3
+Bool firstLevelClear 1
+Bool forestLevelClear 1
+Bool alternateLevelClear 0
+Bool bridgeLevelClear 0
+Bool castleLevelClear 0
+Bool caveLevelClear 0
+Int lastMap 2
+Int returnDir 0

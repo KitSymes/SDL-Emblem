@@ -1,9 +1,11 @@
 #include "MapScreen.h"
 #include "Texture2D.h"
 #include "Character.h"
-#include "GameScreenManager.h"
 #include "BattleScreen.h"
 #include "SaveData.h"
+#include "Collisions.h"
+#include "Utils.h"
+#include "GameScreenManager.h"
 
 MapScreen::MapScreen(SDL_Renderer* renderer, GameScreenManager* gsm) : GameScreen(renderer, gsm)
 {
@@ -12,6 +14,25 @@ MapScreen::MapScreen(SDL_Renderer* renderer, GameScreenManager* gsm) : GameScree
 
 MapScreen::~MapScreen()
 {
+	if (currentPos == start)
+		SaveData::Instance()->lastMap = 0;
+	else if (currentPos == firstLevel)
+		SaveData::Instance()->lastMap = 1;
+	else if (currentPos == forestLevel)
+		SaveData::Instance()->lastMap = 2;
+	else if (currentPos == alternateLevel)
+		SaveData::Instance()->lastMap = 3;
+	else if (currentPos == beforeBridge)
+		SaveData::Instance()->lastMap = 4;
+	else if (currentPos == bridgeLevel)
+		SaveData::Instance()->lastMap = 5;
+	else if (currentPos == lastSplit)
+		SaveData::Instance()->lastMap = 6;
+	else if (currentPos == castleLevel)
+		SaveData::Instance()->lastMap = 7;
+	else if (currentPos == caveLevel)
+		SaveData::Instance()->lastMap = 8;
+
 	currentPos = nullptr;
 
 	delete m_background_texture;
@@ -24,6 +45,8 @@ MapScreen::~MapScreen()
 	m_levelUnlocked_texture = nullptr;
 	delete m_levelComplete_texture;
 	m_levelComplete_texture = nullptr;
+	delete m_ui_textures;
+	m_ui_textures = nullptr;
 
 	delete start;
 	delete firstLevel;
@@ -33,58 +56,111 @@ MapScreen::~MapScreen()
 	delete bridgeLevel;
 	delete lastSplit;
 	delete castleLevel;
+	delete caveLevel;
 
-	SaveData::Instance()->Save("AutoSave");
+	delete m_empty;
+	m_empty = nullptr;
+
+	TTF_CloseFont(m_font);
+
+	SaveData::Instance()->AutoSave();
 }
 
 bool MapScreen::SetUpLevel()
 {
+	// PoIs with no battles
+
 	start = new PoI(11, 9);
 	start->locked = false;
 	start->complete = true;
-	start->north = new int[] {0, 0};
+	start->north.push_back(0);
+	start->north.push_back(0);
 
 	beforeBridge = new PoI(7, 4);
 	beforeBridge->locked = false;
 	beforeBridge->complete = true;
-	beforeBridge->north = new int[] {0, 1, 1, 1, 1, 1};
-	beforeBridge->west = new int[] {3};
-	beforeBridge->south = new int[] {2, 2, 2};
+	beforeBridge->north.push_back(0);
+	beforeBridge->north.push_back(1);
+	beforeBridge->north.push_back(1);
+	beforeBridge->north.push_back(1);
+	beforeBridge->north.push_back(1);
+	beforeBridge->north.push_back(1);
+	beforeBridge->west.push_back(3);
+	beforeBridge->south.push_back(2);
+	beforeBridge->south.push_back(2);
+	beforeBridge->south.push_back(2);
 
 	lastSplit = new PoI(2, 4);
 	lastSplit->locked = false;
 	lastSplit->complete = true;
-	lastSplit->north = new int[] {0, 0};
-	lastSplit->south = new int[] {2, 2};
-	lastSplit->east = new int[] {1, 1, 1, 1};
+	lastSplit->north.push_back(0);
+	lastSplit->north.push_back(0);
+	lastSplit->south.push_back(2);
+	lastSplit->south.push_back(2);
+	lastSplit->east.push_back(1);
+	lastSplit->east.push_back(1);
+	lastSplit->east.push_back(1);
+	lastSplit->east.push_back(1);
 
+	// PoIs with battles
 
 	firstLevel = new PoI(11, 7);
 	firstLevel->mapFile = "map1.txt";
 	firstLevel->locked = false;
-	firstLevel->returnDir = 2;
-	firstLevel->south = new int[] {2, 2};
-	firstLevel->east = new int[] {1, 0, 0, 0, 0};
-	firstLevel->west = new int[] {3, 3, 3, 3};
+	//firstLevel->returnDir = 2;
+	firstLevel->south.push_back(2);
+	firstLevel->south.push_back(2);
+	firstLevel->east.push_back(1);
+	firstLevel->east.push_back(0);
+	firstLevel->east.push_back(0);
+	firstLevel->east.push_back(0);
+	firstLevel->east.push_back(0);
+	firstLevel->west.push_back(3);
+	firstLevel->west.push_back(3);
+	firstLevel->west.push_back(3);
+	firstLevel->west.push_back(3);
 
 	forestLevel = new PoI(7, 7);
-	forestLevel->returnDir = 1;
-	forestLevel->east = new int[] {1, 1, 1, 1};
-	forestLevel->north = new int[] {0, 0, 0};
+	//forestLevel->returnDir = 1;
+	forestLevel->mapFile = "map2.txt";
+	forestLevel->east.push_back(1);
+	forestLevel->east.push_back(1);
+	forestLevel->east.push_back(1);
+	forestLevel->east.push_back(1);
+	forestLevel->north.push_back(0);
+	forestLevel->north.push_back(0);
+	forestLevel->north.push_back(0);
 
 	alternateLevel = new PoI(12, 3);
-	alternateLevel->returnDir = 2;
-	alternateLevel->west = new int[] {3, 3, 3, 3, 3, 2};
-	alternateLevel->south = new int[] {2, 2, 2, 2, 3};
+	//alternateLevel->returnDir = 2;
+	alternateLevel->west.push_back(3);
+	alternateLevel->west.push_back(3);
+	alternateLevel->west.push_back(3);
+	alternateLevel->west.push_back(3);
+	alternateLevel->west.push_back(3);
+	alternateLevel->west.push_back(2);
+	alternateLevel->south.push_back(2);
+	alternateLevel->south.push_back(2);
+	alternateLevel->south.push_back(2);
+	alternateLevel->south.push_back(2);
+	alternateLevel->south.push_back(3);
 
 	bridgeLevel = new PoI(6, 4);
-	bridgeLevel->returnDir = 1;
-	bridgeLevel->west = new int[] {3, 3, 3, 3};
-	bridgeLevel->east = new int[] {1};
+	//bridgeLevel->returnDir = 1;
+	bridgeLevel->west.push_back(3);
+	bridgeLevel->west.push_back(3);
+	bridgeLevel->west.push_back(3);
+	bridgeLevel->west.push_back(3);
+	bridgeLevel->east.push_back(1);
 
 	castleLevel = new PoI(2, 2);
-	castleLevel->returnDir = 2;
-	castleLevel->south = new int[] {2, 2};
+	//castleLevel->returnDir = 2;
+	castleLevel->south.push_back(2);
+	castleLevel->south.push_back(2);
+
+	caveLevel = new PoI(2, 6);
+	caveLevel->north.push_back(0);
+	caveLevel->north.push_back(0);
 
 	start->northPoI = firstLevel;
 	firstLevel->southPoI = start;
@@ -101,7 +177,11 @@ bool MapScreen::SetUpLevel()
 	bridgeLevel->westPoI = lastSplit;
 	lastSplit->eastPoI = bridgeLevel;
 	lastSplit->northPoI = castleLevel;
+	lastSplit->southPoI = caveLevel;
 	castleLevel->southPoI = lastSplit;
+	caveLevel->northPoI = lastSplit;
+
+	// Image Loading
 
 	m_background_texture = new Texture2D(m_renderer, 512, 416);
 	if (!m_background_texture->LoadFromFile("Images/WorldMap/WorldMap.png"))
@@ -127,11 +207,90 @@ bool MapScreen::SetUpLevel()
 		std::cout << "Failed to load level complete texture!" << std::endl;
 	}
 
-	myChar = new Character(m_renderer, "Images/Allies/Infantry/Lancer.png", Vector2D(11 * 32 - 10, 9 * 32 - 10));
-	currentPos = start;
+	m_ui_textures = new Texture2D(m_renderer);
+	if (!m_ui_textures->LoadFromFile("Images/WorldMap/UI.png"))
+	{
+		std::cout << "Failed to load Images/WorldMap/UI.png!" << std::endl;
+	}
 
+	m_font = TTF_OpenFont("Fonts/calibri.ttf", 15);
+	SDL_Color colour = { 0, 0, 0 };
+	m_empty = new Text(m_renderer, m_font, "Empty", colour);
+
+	// Save Data Loading
+
+	switch (SaveData::Instance()->lastMap)
+	{
+	case 0:
+		currentPos = start;
+		break;
+	case 1:
+		currentPos = firstLevel;
+		break;
+	case 2:
+		currentPos = forestLevel;
+		break;
+	case 3:
+		currentPos = alternateLevel;
+		break;
+	case 4:
+		currentPos = beforeBridge;
+		break;
+	case 5:
+		currentPos = bridgeLevel;
+		break;
+	case 6:
+		currentPos = lastSplit;
+		break;
+	case 7:
+		currentPos = castleLevel;
+		break;
+	case 8:
+		currentPos = caveLevel;
+		break;
+	}
+	myChar = new Character(m_renderer, "Images/Allies/Infantry/Lancer.png", Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+
+	if (SaveData::Instance()->firstLevelClear)
+	{
+		firstLevel->complete = true;
+		forestLevel->locked = false;
+		alternateLevel->locked = false;
+	}
+
+	if (SaveData::Instance()->forestLevelClear)
+	{
+		forestLevel->complete = true;
+		bridgeLevel->locked = false;
+	}
+
+	if (SaveData::Instance()->alternateLevelClear)
+	{
+		alternateLevel->complete = true;
+		bridgeLevel->locked = false;
+	}
+
+	if (SaveData::Instance()->bridgeLevelClear)
+	{
+		bridgeLevel->complete = true;
+		castleLevel->locked = false;
+		caveLevel->locked = false;
+	}
+
+	if (SaveData::Instance()->castleLevelClear)
+	{
+		castleLevel->complete = true;
+	}
+
+	if (SaveData::Instance()->caveLevelClear)
+	{
+		caveLevel->complete = true;
+	}
+
+	// Set party to be dead so that unused members don't get checked in BattleScreen logic (it also sets participating members to alive in the constructor)
 	for (Character* c : SaveData::Instance()->m_allies)
 		c->SetAlive(false);
+
 
 	return true;
 }
@@ -161,48 +320,131 @@ void MapScreen::Render()
 		else if (poiPointer == castleLevel)*/
 			break;
 	}
+	if (moving)
+	{
+		if (m_timer >= 20)
+		{
+			m_index++;
+			m_timer = 0;
+			if (m_index >= m_current_path->size())
+				moving = false;
+		}
+		else
+		{
+			int step;
+			switch (m_timer % 5)
+			{
+			case 0:
+			case 3:
+				step = 1;
+				break;
+			case 1:
+			case 2:
+			case 4:
+				step = 2;
+				break;
+			}
+			switch (m_current_path->at(m_index))
+			{
+			case 0:
+				myChar->SetRawPosition(Vector2D(myChar->GetRawPosition().x, myChar->GetRawPosition().y - step));
+				break;
+			case 1:
+				myChar->SetRawPosition(Vector2D(myChar->GetRawPosition().x + step, myChar->GetRawPosition().y));
+				break;
+			case 2:
+				myChar->SetRawPosition(Vector2D(myChar->GetRawPosition().x, myChar->GetRawPosition().y + step));
+				break;
+			case 3:
+				myChar->SetRawPosition(Vector2D(myChar->GetRawPosition().x - step, myChar->GetRawPosition().y));
+				break;
+			default:
+				std::cout << "ERROR IN PATH, INVALID VALUE GIVEN: " << m_current_path->at(m_index) << std::endl;
+				break;
+			}
+			m_timer++;
+		}
+	}
 	myChar->Render();
+
+	if (m_menu == MENU_TITLE)
+	{
+		SDL_Rect source = { 0, 0, 90, 150 };
+		SDL_Rect dest = { 166, 0, 90 * 2, 150 * 2 };
+		m_ui_textures->Render(&source, &dest, SDL_FLIP_NONE);
+	}
+	else if (m_menu == MENU_FILES)
+	{
+		SDL_Rect source = { 90, 0, 90, 182 };
+		SDL_Rect dest = { 166, 0, 90 * 2, 182 * 2 };
+		m_ui_textures->Render(&source, &dest, SDL_FLIP_NONE);
+
+		if (!s1)
+			m_empty->Render(Vector2D(277, 106));
+		if (!s2)
+			m_empty->Render(Vector2D(277, 170));
+		if (!s3)
+			m_empty->Render(Vector2D(277, 234));
+		if (!sa)
+			m_empty->Render(Vector2D(277, 298));
+	}
 }
 
 void MapScreen::Update(float deltaTime, SDL_Event e)
 {
-	moving = false;
 	myChar->Update(deltaTime, e);
-	if (!moving) // TODO actually move smoothly
+
+	if (!moving && m_menu == MENU_NONE)
 		switch (e.type)
 		{
 		case SDL_KEYDOWN:
 			switch (e.key.keysym.sym)
 			{
 			case SDLK_w:
-				if (currentPos->north != nullptr && (currentPos->complete || currentPos->returnDir == 0))
+				if (!currentPos->north.empty() && (currentPos->complete || SaveData::Instance()->returnDir == 0))
 				{
+					SaveData::Instance()->returnDir = InverseDir(currentPos->north[currentPos->north.size() - 1]);
+					m_current_path = &currentPos->north;
 					currentPos = currentPos->northPoI;
-					myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+					//myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+					m_index = 0;
+					m_timer = 0;
 					moving = true;
 				}
 				break;
 			case SDLK_s:
-				if (currentPos->south != nullptr && (currentPos->complete || currentPos->returnDir == 2))
+				if (!currentPos->south.empty() && (currentPos->complete || SaveData::Instance()->returnDir == 2))
 				{
+					SaveData::Instance()->returnDir = InverseDir(currentPos->south[currentPos->south.size() - 1]);
+					m_current_path = &currentPos->south;
 					currentPos = currentPos->southPoI;
-					myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+					//myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+					m_index = 0;
+					m_timer = 0;
 					moving = true;
 				}
 				break;
 			case SDLK_d:
-				if (currentPos->east != nullptr && (currentPos->complete || currentPos->returnDir == 1))
+				if (!currentPos->east.empty() && (currentPos->complete || SaveData::Instance()->returnDir == 1))
 				{
+					SaveData::Instance()->returnDir = InverseDir(currentPos->east[currentPos->east.size() - 1]);
+					m_current_path = &currentPos->east;
 					currentPos = currentPos->eastPoI;
-					myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+					//myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+					m_index = 0;
+					m_timer = 0;
 					moving = true;
 				}
 				break;
 			case SDLK_a:
-				if (currentPos->west != nullptr && (currentPos->complete || currentPos->returnDir == 3))
+				if (!currentPos->west.empty() && (currentPos->complete || SaveData::Instance()->returnDir == 3))
 				{
+					SaveData::Instance()->returnDir = InverseDir(currentPos->west[currentPos->west.size() - 1]);
+					m_current_path = &currentPos->west;
 					currentPos = currentPos->westPoI;
-					myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+					//myChar->SetRawPosition(Vector2D(currentPos->x * 32 - 10, currentPos->y * 32 - 10));
+					m_index = 0;
+					m_timer = 0;
 					moving = true;
 				}
 				break;
@@ -210,8 +452,6 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 			case SDLK_KP_ENTER:
 				if (!currentPos->mapFile.empty())
 				{
-					std::cout << currentPos->mapFile << std::endl;
-					// TODO pass player's troops
 					BattleScreen* bs = new BattleScreen(m_renderer, m_gsm, (char*)("BattleMaps/" + currentPos->mapFile).c_str());
 					m_gsm->ChangeScreen(bs);
 				}
@@ -219,4 +459,90 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 			}
 			break;
 		}
+
+	switch (e.type)
+	{
+	case SDL_KEYDOWN:
+		switch (e.key.keysym.sym)
+		{
+		case SDLK_ESCAPE:
+			if (m_menu == MENU_NONE)
+				m_menu = MENU_TITLE;
+			else
+				m_menu = MENU_NONE;
+			break;
+		}
+		break;
+	case SDL_MOUSEBUTTONDOWN:
+		if (e.button.button == SDL_BUTTON_LEFT)
+		{
+			if (m_menu == MENU_TITLE) {
+				if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 82, m_buttonWidth, m_buttonHeight))) // Party Button
+				{
+					m_menu = MENU_EXTRA;
+				}
+				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 146, m_buttonWidth, m_buttonHeight))) // Save Button
+				{
+					s1 = Utils::exists("Saves/Save1.txt");
+					s2 = Utils::exists("Saves/Save2.txt");
+					s3 = Utils::exists("Saves/Save3.txt");
+					sa = Utils::exists("Saves/AutoSave.txt");
+					m_menu = MENU_FILES;
+				}
+				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 210, m_buttonWidth, m_buttonHeight))) // Main Menu Button
+				{
+					SaveData::Instance()->AutoSave();
+					m_gsm->ChangeScreen(SCREEN_TITLE);
+				}
+				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(176, 274, 30, 26))) // Back
+				{
+					m_menu = MENU_NONE;
+				}
+			}
+			else if (m_menu == MENU_FILES) {
+				if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 82, m_buttonWidth, m_buttonHeight))) // Slot 1
+				{
+					SaveData::Instance()->Save("Save1");
+					s1 = true;
+				}
+				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 146, m_buttonWidth, m_buttonHeight))) // Slot 2
+				{
+					SaveData::Instance()->Save("Save2");
+					s2 = true;
+				}
+				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 210, m_buttonWidth, m_buttonHeight))) // Slot 3
+				{
+					SaveData::Instance()->Save("Save3");
+					s3 = true;
+				}
+				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 274, m_buttonWidth, m_buttonHeight))) // Auto Save
+				{
+					SaveData::Instance()->AutoSave();
+					sa = true;
+				}
+				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(176, 338, 30, 26))) // Back
+				{
+					m_menu = MENU_TITLE;
+				}
+			}
+		}
+		break;
+	}
+}
+
+int MapScreen::InverseDir(int dir)
+{
+	switch (dir)
+	{
+	case 0:
+		return 2;
+	case 2:
+		return 0;
+	case 1:
+		return 3;
+	case 3:
+		return 1;
+	default:
+		return dir;
+	}
 }

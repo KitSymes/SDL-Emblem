@@ -97,3 +97,8 @@ void Texture2D::Render(Vector2D position, SDL_Rect* source, SDL_RendererFlip fli
 	//SDL_Rect renderSource = { m_sourceX, m_sourceY, m_sourceWidth, m_sourceHeight };
 	SDL_RenderCopyEx(m_renderer, m_texture, source, &renderLocation, angle, NULL, flip);
 }
+
+void Texture2D::Render(SDL_Rect* source, SDL_Rect* dest, SDL_RendererFlip flip, int scale, double angle)
+{
+	SDL_RenderCopyEx(m_renderer, m_texture, source, dest, angle, NULL, flip);
+}

@@ -1,11 +1,13 @@
 #pragma once
 #ifndef _GAMESCREENLEVEL1_H
 #define _GAMESCREENLEVEL1_H
-#include "Commons.h"
 #include "GameScreen.h"
+#include "Commons.h"
+#include "Text.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <SDL_ttf.h>
 class Texture2D;
 class Character;
 class MapScreen : public GameScreen
@@ -15,6 +17,11 @@ private:
 	Texture2D* m_levelLocked_texture;
 	Texture2D* m_levelUnlocked_texture;
 	Texture2D* m_levelComplete_texture;
+	Texture2D* m_ui_textures;
+
+	TTF_Font* m_font;
+	Text* m_empty;
+
 	Character* myChar;
 
 	bool SetUpLevel();
@@ -24,11 +31,11 @@ private:
 	{
 		int x = 0, y = 0;
 		bool locked = true, complete = false;
-		int returnDir = 0;
-		int* north = nullptr;
-		int* south = nullptr;
-		int* east = nullptr;
-		int* west = nullptr;
+		//int returnDir = 0;
+		std::vector<int> north;
+		std::vector<int> south;
+		std::vector<int> east;
+		std::vector<int> west;
 		PoI* northPoI = nullptr;
 		PoI* southPoI = nullptr;
 		PoI* eastPoI = nullptr;
@@ -44,14 +51,14 @@ private:
 
 		~PoI()
 		{
-			if (north != nullptr)
-				delete north;
-			if (south != nullptr)
-				delete south;
-			if (east != nullptr)
-				delete east;
-			if (west != nullptr)
-				delete west;
+			if (!north.empty())
+				north.clear();
+			if (!south.empty())
+				south.clear();
+			if (!east.empty())
+				east.clear();
+			if (!west.empty())
+				west.clear();
 
 			northPoI = nullptr;
 			southPoI = nullptr;
@@ -69,8 +76,17 @@ private:
 	PoI* bridgeLevel;
 	PoI* lastSplit;
 	PoI* castleLevel;
+	PoI* caveLevel;
 
 	bool moving = false;
+	bool s1, s2, s3, sa; // Save Slots exist indicators
+	MENU m_menu;
+	int m_buttonWidth = 180;
+	int m_buttonHeight = 60;
+
+	std::vector<int>* m_current_path;
+	int m_index;
+	int m_timer;
 public:
 	MapScreen(SDL_Renderer* renderer, GameScreenManager* gsm);
 	~MapScreen();
@@ -78,6 +94,6 @@ public:
 	void Render() override;
 	void Update(float deltaTime, SDL_Event e) override;
 
-	void Save(std::string name);
+	int InverseDir(int dir);
 };
 #endif

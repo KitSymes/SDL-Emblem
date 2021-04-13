@@ -1,0 +1,16 @@
+Images/BattleMaps/Map2.png
+forestLevelClear
+1 2 1 1 1 2 2 1
+2 1 1 2 1 1 1 1
+1 2 1 1 2 1 2 1
+1 1 1 2 1 1 1 1
+1 1 1 1 1 1 1 1
+1 2 1 1 1 1 2 1
+2 1 2 1 1 2 1 1
+2 2 2 2 2 1 1 1
+2
+7 4
+7 6
+0 4 Infantry Lancer 1 2
+4 1 Infantry Huntsman 2 3
+1 6 Infantry Huntsman 2 2

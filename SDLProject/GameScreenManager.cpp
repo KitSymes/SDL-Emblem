@@ -44,7 +44,6 @@ void GameScreenManager::ChangeScreen(SCREENS screen)
 	case SCREEN_TITLE:
 		m_current_screen = (GameScreen*)new TitleScreen(m_renderer, this);
 		break;
-	case SCREEN_GAMEOVER:
 	default:
 		break;
 	}

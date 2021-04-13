@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include "Character.h"
 #include "Text.h"
+#include "AStar.h"
 #include <vector>
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -16,17 +17,16 @@ private:
 	// Textures / Fonts
 	Texture2D* m_background_texture;
 	Texture2D* m_overlays_texture;
-	Texture2D* m_tile_cursor_texture;
 	Texture2D* m_action_background_texture;
+	Texture2D* m_phase_texture;
+	Texture2D* m_tile_cursor_texture;
 	Texture2D* m_action_cursor_texture;
+	Texture2D* m_sparks_texture;
+	Texture2D* m_bars_texture;
+
 	TTF_Font* m_font;
 
-	// Text
-	Text* m_t_name = nullptr;
-	Text* m_t_level = nullptr;
-	Text* m_t_atk = nullptr;
-	Text* m_t_def = nullptr;
-	Text* m_t_hp = nullptr;
+	Text* m_damage; // HP -> New HP text
 
 	// Enemy Stuff
 	std::vector<Character*> m_enemy_units;
@@ -39,6 +39,7 @@ private:
 	// Hovered Unit
 	Character* m_hovered;
 	SelectedState m_hovered_selected_state;
+	Character* m_attack_target;
 
 	// Action UI
 	int m_move_proposed_x;
@@ -52,6 +53,19 @@ private:
 
 	// Misc Variables
 	bool m_players_turn;
+	PHASE m_phase;
+	int m_phase_timer, m_phase_int; // Resuable stuff
+	bool m_smart_end_turn; // Indicates that a unit has decided on an action, so the next time the phase is IDLE, it needs to check if all units are exhausted
+	bool m_smart_check_routed;
+	std::string m_level_clear_bool;
+	Vector2D m_health_location;
+	int m_exp_old, m_exp_new;
+
+	// Enemy AI
+	Character* m_current_enemy_unit;
+	Character* m_finalTarget;
+	std::vector<AStar::Node> m_finalPath;
+	int m_enemy_mov_points;
 
 	// Functions
 	void MoveMatrixRecurse(Vector2D previousPos, Vector2D newPos, int movesLeft, Character* c);
@@ -61,6 +75,9 @@ public:
 
 	void Render() override;
 	void Update(float deltaTime, SDL_Event e) override;
+
+	Character* GetUnitOnTile(Vector2D tile);
+	Tile* GetTile(Character* unit);
 
 	// UI Checking
 	bool CheckHovered(Character* c, int x, int y);
@@ -73,6 +90,7 @@ public:
 
 	// Gameplay Loops
 	void PlayerTurn();
+	void ExhaustUnit(Character* c);
 	void EnemyTurn();
 };
 #endif

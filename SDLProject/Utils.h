@@ -8,5 +8,6 @@ class Utils
 public:
 	static std::string MoveTypeToString(MOVE_TYPE move_type);
 	static std::string WeaponTypeToString(WEAPON_TYPE weapon_type);
+	static bool exists(const std::string& name);
 };
 #endif
