@@ -10,7 +10,6 @@ MarioPlayerMario::MarioPlayerMario(SDL_Renderer* renderer, std::string imagePath
 
 MarioPlayerMario::~MarioPlayerMario()
 {
-
 }
 
 void MarioPlayerMario::Update(float deltaTime, SDL_Event e)

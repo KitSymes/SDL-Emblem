@@ -19,14 +19,21 @@ MarioScreen::~MarioScreen()
 {
 	m_koopas.clear();
 	m_coins.clear();
+
 	delete m_background_texture;
 	m_background_texture = nullptr;
+	delete m_tile_map;
+	m_tile_map = nullptr;
+
 	delete m_mario;
 	m_mario = nullptr;
 	delete m_luigi;
 	m_luigi = nullptr;
 	delete m_pow_block;
 	m_pow_block = nullptr;
+
+	Mix_FreeChunk(m_coin_sound);
+	m_coin_sound = nullptr;
 }
 
 bool MarioScreen::SetUpLevel()
@@ -35,6 +42,19 @@ bool MarioScreen::SetUpLevel()
 	if (!m_background_texture->LoadFromFile("Images/Mario/BackgroundMB.png"))
 	{
 		std::cout << "Failed to load background texture!" << std::endl;
+	}
+
+	m_tile_map = new Texture2D(m_renderer, 32, 32);
+	if (!m_tile_map->LoadFromFile("Images/Mario/TileMap.png"))
+	{
+		std::cout << "Failed to load the TileMap texture!" << std::endl;
+	}
+
+	m_coin_sound = Mix_LoadWAV("Sounds/Pickup_Coin.wav");
+	if (!m_coin_sound)
+	{
+		std::cout << "Failed to load Sounds/Pickup_Coin.wav sound!" << std::endl;
+		std::cout << Mix_GetError() << std::endl;
 	}
 
 	SetLevelMap();
@@ -47,7 +67,13 @@ bool MarioScreen::SetUpLevel()
 	m_background_yPos = 0.0f;
 	m_koopa_klock = 0;
 
-	CreateCoin(Vector2D(224, 100));
+	CreateCoin(Vector2D(229, 100));
+	CreateCoin(Vector2D(30, 350));
+	CreateCoin(Vector2D(434, 350));
+	CreateCoin(Vector2D(10, 250));
+	CreateCoin(Vector2D(454, 250));
+	CreateCoin(Vector2D(10, 150));
+	CreateCoin(Vector2D(454, 150));
 
 	LoadMusic("Audio/Mario/Mario.mp3");
 
@@ -56,10 +82,46 @@ bool MarioScreen::SetUpLevel()
 
 void MarioScreen::Render()
 {
+	m_background_texture->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
+
 	for (int i = 0; i < m_koopas.size(); i++)
 		m_koopas[i]->Render();
 
-	m_background_texture->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
+	for (int y = 0; y < MARIO_MAP_HEIGHT; y++)
+		for (int x = 0; x < MARIO_MAP_WIDTH; x++)
+		{
+			SDL_Rect source = { 0, 0, 32, 32 };
+			switch (m_level_map->GetTileAt(y, x))
+			{
+			case 1: // Blue Blocks
+				source.x = 64;
+				m_tile_map->Render(Vector2D(x * 32, y * 32), &source, SDL_FLIP_NONE);
+				break;
+			case 2: // Bricks
+				source.x = 64;
+				source.y = 32;
+				m_tile_map->Render(Vector2D(x * 32, y * 32), &source, SDL_FLIP_NONE);
+				break;
+			case 3: // Top Pipe
+				m_tile_map->Render(Vector2D(x * 32, y * 32), &source, SDL_FLIP_NONE);
+				break;
+			case 4: // Bottom Pipe
+				source.y = 32;
+				m_tile_map->Render(Vector2D(x * 32, y * 32), &source, SDL_FLIP_NONE);
+				break;
+			case 5: // Top Pipe Exit
+				source.x = 32;
+				m_tile_map->Render(Vector2D(x * 32, y * 32), &source, x > 8 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+				break;
+			case 6: // Bottom Pipe Exit
+				source.x = 32;
+				source.y = 32;
+				m_tile_map->Render(Vector2D(x * 32, y * 32), &source, x > 8 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+				break;
+			default:
+				break;
+			}
+		}
 
 	for (int i = 0; i < m_coins.size(); i++)
 		m_coins[i]->Render();
@@ -71,10 +133,22 @@ void MarioScreen::Render()
 
 void MarioScreen::Update(float deltaTime, SDL_Event e)
 {
-	/*if (Collisions::Instance()->Circle(m_mario->GetPosition(), m_mario->GetCollisionRadius(), m_luigi->GetPosition(), m_luigi->GetCollisionRadius()))
+	int delIndex = -1;
+	for (int i = 0; i < m_coins.size(); i++)
 	{
-
-	}*/
+		MarioCharacterCoin* coin = m_coins[i];
+		if (Collisions::Instance()->Circle(m_mario->GetPosition(), m_mario->GetCollisionRadius(), coin->GetPosition(), coin->GetCollisionRadius()) ||
+			Collisions::Instance()->Circle(m_luigi->GetPosition(), m_luigi->GetCollisionRadius(), coin->GetPosition(), coin->GetCollisionRadius()))
+		{
+			Mix_PlayChannel(-1, m_coin_sound, 0);
+			delIndex = i;
+			break;
+		}
+	}
+	if (delIndex >= 0)
+	{
+		m_coins.erase(m_coins.begin() + delIndex);
+	}
 
 	if (m_screenshake)
 	{
@@ -99,19 +173,19 @@ void MarioScreen::Update(float deltaTime, SDL_Event e)
 void MarioScreen::SetLevelMap()
 {
 	int map[MARIO_MAP_HEIGHT][MARIO_MAP_WIDTH] = {
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3 },
+		{ 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 4 },
 		{ 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
 		{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0 }, // Will be 1, 1 in middle for POW block
+		{ 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0 },
 		{ 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
+		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 } };
 
 	if (m_level_map != nullptr)
 		delete m_level_map;

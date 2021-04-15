@@ -63,6 +63,9 @@ MapScreen::~MapScreen()
 
 	TTF_CloseFont(m_font);
 
+	Mix_FreeChunk(m_click_sound);
+	m_click_sound = nullptr;
+
 	SaveData::Instance()->AutoSave();
 }
 
@@ -148,6 +151,7 @@ bool MapScreen::SetUpLevel()
 
 	bridgeLevel = new PoI(6, 4);
 	//bridgeLevel->returnDir = 1;
+	bridgeLevel->mapFile = "map3.txt";
 	bridgeLevel->west.push_back(3);
 	bridgeLevel->west.push_back(3);
 	bridgeLevel->west.push_back(3);
@@ -156,6 +160,7 @@ bool MapScreen::SetUpLevel()
 
 	castleLevel = new PoI(2, 2);
 	//castleLevel->returnDir = 2;
+	castleLevel->mapFile = "map4.txt";
 	castleLevel->south.push_back(2);
 	castleLevel->south.push_back(2);
 
@@ -212,6 +217,13 @@ bool MapScreen::SetUpLevel()
 	if (!m_ui_textures->LoadFromFile("Images/WorldMap/UI.png"))
 	{
 		std::cout << "Failed to load Images/WorldMap/UI.png!" << std::endl;
+	}
+
+	m_click_sound = Mix_LoadWAV("Sounds/Click.wav");
+	if (!m_click_sound)
+	{
+		std::cout << "Failed to load Sounds/Click.wav sound!" << std::endl;
+		std::cout << Mix_GetError() << std::endl;
 	}
 
 	m_font = TTF_OpenFont("Fonts/calibri.ttf", 15);
@@ -496,10 +508,12 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 					for (Character* c : SaveData::Instance()->m_allies)
 					{
 						c->SetMoved(false);
+						c->m_health = c->m_max_health;
 						c->SetRawPosition(Vector2D(-9 + i * 130, 100));
 						c->UpdateText(m_font);
 						i++;
 					}
+					Mix_PlayChannel(-1, m_click_sound, 0);
 					m_menu = MENU_EXTRA;
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 146, m_buttonWidth, m_buttonHeight))) // Save Button
@@ -508,15 +522,18 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 					s2 = Utils::exists("Saves/Save2.txt");
 					s3 = Utils::exists("Saves/Save3.txt");
 					sa = Utils::exists("Saves/AutoSave.txt");
+					Mix_PlayChannel(-1, m_click_sound, 0);
 					m_menu = MENU_FILES;
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 210, m_buttonWidth, m_buttonHeight))) // Main Menu Button
 				{
 					SaveData::Instance()->AutoSave();
+					Mix_PlayChannel(-1, m_click_sound, 0);
 					m_gsm->ChangeScreen(SCREEN_TITLE);
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(176, 274, 30, 26))) // Back
 				{
+					Mix_PlayChannel(-1, m_click_sound, 0);
 					m_menu = MENU_NONE;
 				}
 			}
@@ -525,24 +542,29 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 				{
 					SaveData::Instance()->Save("Save1");
 					s1 = true;
+					Mix_PlayChannel(-1, m_click_sound, 0);
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 146, m_buttonWidth, m_buttonHeight))) // Slot 2
 				{
 					SaveData::Instance()->Save("Save2");
 					s2 = true;
+					Mix_PlayChannel(-1, m_click_sound, 0);
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 210, m_buttonWidth, m_buttonHeight))) // Slot 3
 				{
 					SaveData::Instance()->Save("Save3");
 					s3 = true;
+					Mix_PlayChannel(-1, m_click_sound, 0);
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 274, m_buttonWidth, m_buttonHeight))) // Auto Save
 				{
 					SaveData::Instance()->AutoSave();
 					sa = true;
+					Mix_PlayChannel(-1, m_click_sound, 0);
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(176, 338, 30, 26))) // Back
 				{
+					Mix_PlayChannel(-1, m_click_sound, 0);
 					m_menu = MENU_TITLE;
 				}
 			}
@@ -565,6 +587,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 							c->UpdateText(m_font);
 							i++;
 						}
+						Mix_PlayChannel(-1, m_click_sound, 0);
 					}
 					else if (i < SaveData::Instance()->m_allies.size() - 1 &&
 						Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(i * 130 + 67, 192, 24, 18))) // Move Party Member Right
@@ -581,6 +604,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 							c->UpdateText(m_font);
 							i++;
 						}
+						Mix_PlayChannel(-1, m_click_sound, 0);
 					}
 				}
 			}

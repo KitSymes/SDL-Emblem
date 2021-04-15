@@ -5,6 +5,7 @@
 #include "GameScreen.h"
 #include "MarioLevelMap.h"
 #include <vector>
+#include <SDL_mixer.h>
 class Texture2D;
 class MarioCharacter;
 class PowBlock;
@@ -15,6 +16,10 @@ class MarioScreen : GameScreen
 {
 private:
 	Texture2D* m_background_texture;
+	Texture2D* m_tile_map;
+
+	Mix_Chunk* m_coin_sound;
+
 	MarioCharacter* m_mario;
 	MarioCharacter* m_luigi;
 	MarioLevelMap* m_level_map;

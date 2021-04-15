@@ -36,6 +36,7 @@ double delta = 0;
 
 int main(int argc, char* args[])
 {
+	system("CLS");
 	srand(time(NULL));
 	// Try to create Window
 	if (InitSDL())
@@ -132,6 +133,7 @@ void CloseSDL()
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	// Quit SDL Subsystems
+	Mix_Quit();
 	IMG_Quit();
 	TTF_Quit();
 	SDL_Quit();

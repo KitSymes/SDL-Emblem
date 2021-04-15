@@ -10,6 +10,7 @@
 #include <vector>
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 class Texture2D;
 class BattleScreen : public GameScreen
 {
@@ -25,8 +26,11 @@ private:
 	Texture2D* m_bars_texture;
 	Texture2D* m_icons_texture;
 
-	TTF_Font* m_font;
+	Mix_Chunk* m_hurt_sound;
+	Mix_Chunk* m_exp_sound;
+	Mix_Chunk* m_lvl_up_sound;
 
+	TTF_Font* m_font;
 	Text* m_damage; // HP -> New HP text
 
 	// Enemy Stuff
@@ -61,6 +65,7 @@ private:
 	std::string m_level_clear_bool;
 	Vector2D m_health_location;
 	int m_exp_old, m_exp_new;
+	int m_health_left;
 
 	// Enemy AI
 	Character* m_current_enemy_unit;

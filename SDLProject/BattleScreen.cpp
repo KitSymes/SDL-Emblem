@@ -17,6 +17,8 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 	inFile >> image;
 	inFile >> m_level_clear_bool;
 
+	// Textures
+
 	m_background_texture = new Texture2D(m_renderer, 512, 416);
 	if (!m_background_texture->LoadFromFile(image))
 	{
@@ -71,6 +73,29 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 		std::cout << "Failed to load Images/BattleMaps/Icons.png texture!" << std::endl;
 	}
 
+	// Sounds
+
+	m_hurt_sound = Mix_LoadWAV("Sounds/Hit_Hurt.wav");
+	if (!m_hurt_sound)
+	{
+		std::cout << "Failed to load Sounds/Hit_Hurt.wav sound!" << std::endl;
+		std::cout << Mix_GetError() << std::endl;
+	}
+
+	m_exp_sound = Mix_LoadWAV("Sounds/Exp_Point.wav");
+	if (!m_exp_sound)
+	{
+		std::cout << "Failed to load Sounds/Exp_Point.wav sound!" << std::endl;
+		std::cout << Mix_GetError() << std::endl;
+	}
+
+	m_lvl_up_sound = Mix_LoadWAV("Sounds/Level_Up.wav");
+	if (!m_lvl_up_sound)
+	{
+		std::cout << "Failed to load Sounds/Level_Up.wav sound!" << std::endl;
+		std::cout << Mix_GetError() << std::endl;
+	}
+
 	m_font = TTF_OpenFont("Fonts/calibri.ttf", 15);
 
 	m_players_turn = true;
@@ -101,6 +126,10 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 			case 3: // Inaccesable Tile
 				m_map[y][x].moveCost = 999;
 				break;
+			case 4: // Throne Tile
+				m_map[y][x].attackBonus = 3;
+				m_map[y][x].defenceBonus = 3;
+				break;
 			default:
 				std::cout << "Unrecognised Tile Type " << tileType << " in " << path << std::endl;
 				break;
@@ -108,7 +137,7 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 			m_map[y][x].x = x;
 			m_map[y][x].y = y;
 		}
-	int ally_unit_count;
+	int ally_unit_count, currentTotal = 0;
 	inFile >> ally_unit_count;
 
 	for (int i = 0; i < ally_unit_count; i++)
@@ -116,6 +145,7 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 		int x, y;
 		inFile >> x;
 		inFile >> y;
+		currentTotal++;
 
 		Character* ally = SaveData::Instance()->m_allies[i];
 
@@ -127,6 +157,14 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 
 		m_last_cursor_tile = Vector2D(x, y);
 	}
+	while (currentTotal < ally_unit_count)
+	{
+		int x, y;
+		inFile >> x;
+		inFile >> y;
+		currentTotal++;
+	}
+
 	while (!inFile.eof())
 	{
 		Character* unit = nullptr;
@@ -141,6 +179,10 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 		if (moveStr == "Infantry")
 		{
 			moveType = INFANTRY;
+		}
+		else if (moveStr == "Armoured")
+		{
+			moveType = ARMOUR;
 		}
 		else {
 			std::cout << "Invalid Move Type " << moveStr << " in " << path << std::endl;
@@ -199,7 +241,16 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 
 BattleScreen::~BattleScreen()
 {
+	Mix_FreeChunk(m_hurt_sound);
+	m_hurt_sound = nullptr;
+	Mix_FreeChunk(m_exp_sound);
+	m_exp_sound = nullptr;
+	Mix_FreeChunk(m_lvl_up_sound);
+	m_lvl_up_sound = nullptr;
+
 	TTF_CloseFont(m_font);
+	m_font = nullptr;
+
 	m_enemy_units.clear();
 	m_hovered = nullptr;
 	m_attack_target = nullptr;
@@ -443,10 +494,77 @@ void BattleScreen::Render()
 
 	if (m_phase == PHASE_START)
 	{
-		int add = m_phase_timer - 20;
-		m_phase_int += (add * add) / 40;
 		SDL_Rect source = { 0, !m_players_turn * 22, m_phase_texture->GetWidth(), m_phase_texture->GetHeight() };
 		m_phase_texture->Render(Vector2D(m_phase_int - 35, 186), &source, SDL_FLIP_NONE, 2);
+	}
+	else if (m_phase == PHASE_IDLE)
+	{
+
+	}
+	else if (m_phase == PHASE_MOVING)
+	{
+
+	}
+	else if (m_phase == PHASE_ATTACKING)
+	{
+		Character* attacker = m_players_turn ? m_hovered : m_current_enemy_unit;
+		Character* defender = m_players_turn ? m_attack_target : m_finalTarget;
+
+		if (m_phase_timer > 20)
+		{
+		}
+		else
+		{
+			if (m_phase_timer <= 10) // 0-10
+			{
+
+			}
+			else // 11-20
+			{
+				SDL_Rect source = { 26 * ((m_phase_timer - 11) / 3), 0, 26, 26 };
+				m_sparks_texture->Render(defender->GetRawPosition(), &source, SDL_FLIP_NONE, 2);
+				m_sparks_texture->Render(defender->GetRawPosition(), &source, SDL_FLIP_NONE, 2);
+				m_sparks_texture->Render(defender->GetRawPosition(), &source, SDL_FLIP_NONE, 2);
+				for (int i = 1; i <= 10; i++)
+				{
+					SDL_Rect source2 = { 0, (m_health_left) >= (i * (double)defender->m_max_health / 10) ? 20 : 0, 5, 20 };
+					m_bars_texture->Render(Vector2D(m_health_location.x + (i - 1) * 5, m_health_location.y), &source2, SDL_FLIP_NONE);
+				}
+			}
+		}
+	}
+	else if (m_phase == PHASE_EXP)
+	{
+		for (int i = 1; i <= 10; i++)
+		{
+			SDL_Rect source2 = { 5, m_phase_int % 10 >= i ? 20 : 0, 5, 20 };
+			m_bars_texture->Render(Vector2D(m_health_location.x + (i - 1) * 5, m_health_location.y), &source2, SDL_FLIP_NONE);
+		}
+	}
+	else if (m_phase == PHASE_END)
+	{
+
+	}
+	else if (m_phase == PHASE_WON)
+	{
+		SDL_Rect source = { 0, 2 * 22, m_phase_texture->GetWidth(), m_phase_texture->GetHeight() };
+		m_phase_texture->Render(Vector2D(m_phase_int - 35, 186), &source, SDL_FLIP_NONE, 2);
+	}
+	else if (m_phase == PHASE_LOST)
+	{
+		SDL_Rect source = { 0, 3 * 22, m_phase_texture->GetWidth(), m_phase_texture->GetHeight() };
+		m_phase_texture->Render(Vector2D(m_phase_int - 35, 186), &source, SDL_FLIP_NONE, 2);
+	}
+
+
+}
+
+void BattleScreen::Update(float deltaTime, SDL_Event e)
+{
+	if (m_phase == PHASE_START)
+	{
+		int add = m_phase_timer - 20;
+		m_phase_int += (add * add) / 40;
 		m_phase_timer++;
 		if (m_phase_timer > 60)
 			m_phase = PHASE_IDLE;
@@ -509,60 +627,17 @@ void BattleScreen::Render()
 								map[(int)enemy->GetMapPosition().y][(int)enemy->GetMapPosition().x].occupied = false;
 								map[(int)player->GetMapPosition().y][(int)player->GetMapPosition().x].occupied = false;
 
-								/*if (enemy->GetRange() == 2)
-								{
-									int distance = -1;
-									if (player->GetMapPosition().y - 1 >= 0)
-									{
-										int dx = abs(player->GetMapPosition().x - enemy->GetMapPosition().x);
-										int dy = abs(player->GetMapPosition().y - 1 - enemy->GetMapPosition().y);
-										if (distance == -1 || distance > dx + dy)
-										{
-											distance = dx + dy;
-											nodePlayer.x = player->GetMapPosition().x;
-											nodePlayer.y = player->GetMapPosition().y - 1;
-										}
-									}
-									if (player->GetMapPosition().x + 1 < EMBLEM_MAP_DIMENSION)
-									{
-										int dx = abs(player->GetMapPosition().x + 1 - enemy->GetMapPosition().x);
-										int dy = abs(player->GetMapPosition().y - enemy->GetMapPosition().y);
-										if (distance == -1 || distance > dx + dy)
-										{
-											distance = dx + dy;
-											nodePlayer.x = player->GetMapPosition().x + 1;
-											nodePlayer.y = player->GetMapPosition().y;
-										}
-									}
-									if (player->GetMapPosition().y + 1 < EMBLEM_MAP_DIMENSION)
-									{
-										int dx = abs(player->GetMapPosition().x - enemy->GetMapPosition().x);
-										int dy = abs(player->GetMapPosition().y + 1 - enemy->GetMapPosition().y);
-										if (distance == -1 || distance > dx + dy)
-										{
-											distance = dx + dy;
-											nodePlayer.x = player->GetMapPosition().x;
-											nodePlayer.y = player->GetMapPosition().y + 1;
-										}
-									}
-									if (player->GetMapPosition().x - 1 >= 0)
-									{
-										int dx = abs(player->GetMapPosition().x - 1 - enemy->GetMapPosition().x);
-										int dy = abs(player->GetMapPosition().y - enemy->GetMapPosition().y);
-										if (distance == -1 || distance > dx + dy)
-										{
-											distance = dx + dy;
-											nodePlayer.x = player->GetMapPosition().x - 1;
-											nodePlayer.y = player->GetMapPosition().y;
-										}
-									}
-								}*/
-
 								std::vector<AStar::Node> path;
 
 								if (enemy->GetRange() == 1)
 								{
 									path = AStar::aStar(map, enemy, nodeEnemy, nodePlayer);
+
+									if (path.size() == 0) // Can't pathfind to target
+									{
+										path.clear();
+										continue;
+									}
 
 									int tileDistanceFromTarget = path.at(path.size() - 2).gCost; // Because last node (size - 1) is the destination
 									if (tileDistanceFromTarget < finalTargetDistance)
@@ -669,8 +744,13 @@ void BattleScreen::Render()
 						for (int i = 0; i < m_finalPath.size() - 1; i++)
 							std::cout << "(x" << m_finalPath.at(i).x << " y" << m_finalPath.at(i).y << ")" << std::endl;*/
 
-						m_enemy_mov_points = enemy->GetMoves();
-						m_phase = PHASE_MOVING;
+						if (finalTargetDistance == 999)
+							ExhaustUnit(enemy);
+						else
+						{
+							m_enemy_mov_points = enemy->GetMoves();
+							m_phase = PHASE_MOVING;
+						}
 						break;
 					}
 			}
@@ -685,14 +765,23 @@ void BattleScreen::Render()
 				ExhaustUnit(m_current_enemy_unit);
 				m_phase_timer = 0;
 
-				if (m_finalTarget->GetMapPosition().y < 7)
-					m_health_location = Vector2D(m_finalTarget->GetRawPosition().x,
-						m_finalTarget->GetRawPosition().y + EMBLEM_TILE_DIMENSION);
+				if (m_finalTarget == nullptr)
+				{
+					std::cout << "Enemy had no attack target!" << std::endl;
+					ExhaustUnit(m_current_enemy_unit);
+					m_phase = PHASE_IDLE;
+				}
 				else
-					m_health_location = Vector2D(m_finalTarget->GetRawPosition().x,
-						m_finalTarget->GetRawPosition().y - 10);
+				{
+					if (m_finalTarget->GetMapPosition().y < 7)
+						m_health_location = Vector2D(m_finalTarget->GetRawPosition().x,
+							m_finalTarget->GetRawPosition().y + EMBLEM_TILE_DIMENSION);
+					else
+						m_health_location = Vector2D(m_finalTarget->GetRawPosition().x,
+							m_finalTarget->GetRawPosition().y - 10);
 
-				m_phase = PHASE_ATTACKING;
+					m_phase = PHASE_ATTACKING;
+				}
 			}
 			else if (m_enemy_mov_points - m_map[m_finalPath.at(0).y][m_finalPath.at(0).x].moveCost < 0) // Ran out of moves
 			{
@@ -776,12 +865,12 @@ void BattleScreen::Render()
 		else
 		{
 			int step = 4;
-			int xDir = 0;// = (attacker->GetMapPosition().y == defender->GetMapPosition().y ? attacker->GetMapPosition().x < defender->GetMapPosition().x ? 1 : -1 : 0);
+			int xDir = 0;
 			if (attacker->GetMapPosition().x < defender->GetMapPosition().x)
 				xDir = 1;
 			else if (attacker->GetMapPosition().x > defender->GetMapPosition().x)
 				xDir = -1;
-			int yDir = 0;// = (attacker->GetMapPosition().x == defender->GetMapPosition().x ? attacker->GetMapPosition().y < defender->GetMapPosition().y ? 1 : -1 : 0);
+			int yDir = 0;
 			if (attacker->GetMapPosition().y < defender->GetMapPosition().y)
 				yDir = 1;
 			else if (attacker->GetMapPosition().y > defender->GetMapPosition().y)
@@ -791,37 +880,27 @@ void BattleScreen::Render()
 				attacker->SetRawPosition(Vector2D(attacker->GetRawPosition().x + step * xDir, attacker->GetRawPosition().y + step * yDir));
 			else // 11-20
 			{
+				if (m_phase_timer == 11)
+					Mix_PlayChannel(-1, m_hurt_sound, 0);
 				attacker->SetRawPosition(Vector2D(attacker->GetRawPosition().x - step * xDir, attacker->GetRawPosition().y - step * yDir));
-				SDL_Rect source = { 26 * ((m_phase_timer - 11) / 3), 0, 26, 26 };
-				m_sparks_texture->Render(defender->GetRawPosition(), &source, SDL_FLIP_NONE, 2);
-				m_sparks_texture->Render(defender->GetRawPosition(), &source, SDL_FLIP_NONE, 2);
-				m_sparks_texture->Render(defender->GetRawPosition(), &source, SDL_FLIP_NONE, 2);
 				int maxDamage = attacker->GetDamageResult(defender, GetTile(defender), GetTile(attacker));
 				if (maxDamage > defender->m_health)
 					maxDamage = defender->m_health;
 				double healthLeftD = defender->m_health - ((m_phase_timer - 11) * maxDamage / 9.0);
-				int healthLeft = ceil(healthLeftD);
-				std::max(0, healthLeft);
-				for (int i = 1; i <= 10; i++)
-				{
-					SDL_Rect source2 = { 0, (healthLeft) >= (i * (double)defender->m_max_health / 10) ? 20 : 0, 5, 20 };
-					m_bars_texture->Render(Vector2D(m_health_location.x + (i - 1) * 5, m_health_location.y), &source2, SDL_FLIP_NONE);
-				}
+				m_health_left = ceil(healthLeftD);
+				m_health_left = std::max(0, m_health_left); // TODO changed this
 			}
 			m_phase_timer++;
 		}
 	}
 	else if (m_phase == PHASE_EXP)
 	{
-		if (m_phase_int < m_exp_new)
+		if (m_phase_int < m_exp_new && m_phase_timer % 10 == 1)
 		{
-			m_phase_int += (m_phase_timer % 10 == 1 ? 1 : 0); // current EXP points
-		}
-
-		for (int i = 1; i <= 10; i++)
-		{
-			SDL_Rect source2 = { 5, m_phase_int % 10 >= i ? 20 : 0, 5, 20 };
-			m_bars_texture->Render(Vector2D(m_health_location.x + (i - 1) * 5, m_health_location.y), &source2, SDL_FLIP_NONE);
+			m_phase_int += 1; // current EXP points
+			Mix_PlayChannel(-1, m_exp_sound, 0);
+			if (m_phase_int != 0 && m_phase_int % 10 == 0)
+				Mix_PlayChannel(-1, m_lvl_up_sound, 0);
 		}
 
 		m_phase_timer++;
@@ -854,8 +933,6 @@ void BattleScreen::Render()
 	{
 		int add = m_phase_timer - 20;
 		m_phase_int += (add * add) / 40;
-		SDL_Rect source = { 0, 2 * 22, m_phase_texture->GetWidth(), m_phase_texture->GetHeight() };
-		m_phase_texture->Render(Vector2D(m_phase_int - 35, 186), &source, SDL_FLIP_NONE, 2);
 		m_phase_timer++;
 		if (m_phase_timer > 60)
 		{
@@ -868,8 +945,6 @@ void BattleScreen::Render()
 	{
 		int add = m_phase_timer - 20;
 		m_phase_int += (add * add) / 40;
-		SDL_Rect source = { 0, 3 * 22, m_phase_texture->GetWidth(), m_phase_texture->GetHeight() };
-		m_phase_texture->Render(Vector2D(m_phase_int - 35, 186), &source, SDL_FLIP_NONE, 2);
 		m_phase_timer++;
 		if (m_phase_timer > 60)
 		{
@@ -878,11 +953,6 @@ void BattleScreen::Render()
 		}
 	}
 
-
-}
-
-void BattleScreen::Update(float deltaTime, SDL_Event e)
-{
 	if (m_smart_check_routed && m_phase == PHASE_IDLE)
 	{
 		m_smart_check_routed = false;
@@ -1111,7 +1181,7 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 										delete m_damage;
 									m_attack_target = unit;
 									m_attack_target->UpdateText(m_font, GetTile(m_attack_target));
-									int hpAfterAttack = m_attack_target->m_health - m_hovered->GetDamageResult(m_attack_target, GetTile(m_attack_target), GetTile(m_hovered));
+									int hpAfterAttack = m_attack_target->m_health - m_hovered->GetDamageResult(m_attack_target, GetTile(m_attack_target), &m_map[m_move_proposed_y][m_move_proposed_x]);
 									if (hpAfterAttack < 0)
 										hpAfterAttack = 0;
 									std::string text = std::to_string(m_attack_target->m_health).append(" -> ").append(std::to_string(hpAfterAttack));

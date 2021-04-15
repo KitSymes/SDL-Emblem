@@ -22,6 +22,13 @@ TitleScreen::TitleScreen(SDL_Renderer* renderer, GameScreenManager* gsm) : GameS
 		std::cout << "Failed to load TitleScreen/Title!" << std::endl;
 	}
 
+	m_click_sound = Mix_LoadWAV("Sounds/Click.wav");
+	if (!m_click_sound)
+	{
+		std::cout << "Failed to load Sounds/Click.wav sound!" << std::endl;
+		std::cout << Mix_GetError() << std::endl;
+	}
+
 	m_font = TTF_OpenFont("Fonts/calibri.ttf", 15);
 	SDL_Color colour = { 0, 0, 0 };
 	m_empty = new Text(renderer, m_font, "Empty", colour);
@@ -36,6 +43,9 @@ TitleScreen::~TitleScreen()
 
 	delete m_empty;
 	m_empty = nullptr;
+
+	Mix_FreeChunk(m_click_sound);
+	m_click_sound = nullptr;
 
 	TTF_CloseFont(m_font);
 }
@@ -80,6 +90,7 @@ void TitleScreen::Update(float deltaTime, SDL_Event e)
 					s2 = Utils::exists("Saves/Save2.txt");
 					s3 = Utils::exists("Saves/Save3.txt");
 					sa = Utils::exists("Saves/AutoSave.txt");
+					Mix_PlayChannel(-1, m_click_sound, 0);
 					m_menu = MENU_FILES;
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(166, 178, m_buttonWidth, m_buttonHeight)))
@@ -130,6 +141,7 @@ void TitleScreen::Update(float deltaTime, SDL_Event e)
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(176, 338, 30, 26))) // Back
 				{
+					Mix_PlayChannel(-1, m_click_sound, 0);
 					m_menu = MENU_TITLE;
 				}
 			}

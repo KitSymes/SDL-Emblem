@@ -8,6 +8,7 @@
 #include <fstream>
 #include <vector>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 class Texture2D;
 class Character;
 class MapScreen : public GameScreen
@@ -18,6 +19,8 @@ private:
 	Texture2D* m_levelUnlocked_texture;
 	Texture2D* m_levelComplete_texture;
 	Texture2D* m_ui_textures;
+
+	Mix_Chunk* m_click_sound;
 
 	TTF_Font* m_font;
 	Text* m_empty;

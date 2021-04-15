@@ -19,13 +19,24 @@ MarioCharacter::MarioCharacter(SDL_Renderer* renderer, std::string imagePath, Ve
 
 	if (!m_texture->LoadFromFile(imagePath))
 		std::cout << "Image " << imagePath << " failed to load" << std::endl;
+
+	m_jump_sound = Mix_LoadWAV("Sounds/Jump.wav");
+	if (!m_jump_sound)
+	{
+		std::cout << "Failed to load Sounds/Jump.wav sound!" << std::endl;
+		std::cout << Mix_GetError() << std::endl;
+	}
 }
 
 MarioCharacter::~MarioCharacter()
 {
 	m_renderer = nullptr;
+
 	delete m_texture;
 	m_texture = nullptr;
+
+	Mix_FreeChunk(m_jump_sound);
+	m_jump_sound = nullptr;
 }
 
 void MarioCharacter::Render()
@@ -71,9 +82,14 @@ void MarioCharacter::Update(float deltaTime, SDL_Event e)
 	{
 		switch (m_screen->GetLevelMap()->GetTileAt(yMinPositionAfterMove, xMinPosition))
 		{
-		case 2:
-			hitPow = true;
+		case 7:
+			hitPow = true; // No break; so do bonk = true too
 		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
 			bonked = true;
 			break;
 		default:
@@ -82,9 +98,14 @@ void MarioCharacter::Update(float deltaTime, SDL_Event e)
 
 		switch (m_screen->GetLevelMap()->GetTileAt(yMinPositionAfterMove, xMaxPosition))
 		{
-		case 2:
-			hitPow = true;
+		case 7:
+			hitPow = true; // No break; so do bonk = true too
 		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
 			bonked = true;
 			break;
 		default:
@@ -104,8 +125,13 @@ void MarioCharacter::Update(float deltaTime, SDL_Event e)
 		bool stopped = false;
 		switch (m_screen->GetLevelMap()->GetTileAt(yMaxPositionAfterMove, xMinPosition))
 		{
-		case 2:
 		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
 			stopped = true;
 			break;
 		default:
@@ -114,8 +140,13 @@ void MarioCharacter::Update(float deltaTime, SDL_Event e)
 
 		switch (m_screen->GetLevelMap()->GetTileAt(yMaxPositionAfterMove, xMaxPosition))
 		{
-		case 2:
 		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
 			stopped = true;
 			break;
 		default:
@@ -269,6 +300,7 @@ void MarioCharacter::Jump()
 {
 	if (m_can_jump)
 	{
+		Mix_PlayChannel(-1, m_jump_sound, 0);
 		float calc = m_velocity_right - m_velocity_left;
 
 		if (calc < 0)

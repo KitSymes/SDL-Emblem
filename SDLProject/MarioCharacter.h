@@ -2,9 +2,10 @@
 #ifndef _MARIOPLAYER_H
 #define _MARIOPLAYER_H
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include <iostream>
-#include "Commons.h"
 #include <string>
+#include "Commons.h"
 #include "Texture2D.h"
 #include "MarioScreen.h"
 #include "Collisions.h"
@@ -13,8 +14,12 @@ class MarioCharacter
 {
 protected:
 	SDL_Renderer* m_renderer;
-	Vector2D m_position;
+
 	Texture2D* m_texture;
+
+	Mix_Chunk* m_jump_sound;
+
+	Vector2D m_position;
 	FACING m_facing_direction;
 
 	bool m_moving_left;

@@ -5,12 +5,15 @@
 #include "GameScreen.h"
 #include "Text.h"
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 class Texture2D;
 class TitleScreen : GameScreen
 {
 private:
 	Texture2D* m_background_texture;
 	Texture2D* m_title_texture;
+
+	Mix_Chunk* m_click_sound;
 
 	TTF_Font* m_font;
 	Text* m_empty;

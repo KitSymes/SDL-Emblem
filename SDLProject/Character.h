@@ -79,6 +79,8 @@ public:
 		{
 		case INFANTRY:
 			return 3;
+		case ARMOUR:
+			return 1;
 		default:
 			return 1;
 		}
