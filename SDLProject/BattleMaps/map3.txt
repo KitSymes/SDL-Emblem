@@ -13,7 +13,7 @@ bridgeLevelClear
 6 4
 7 3
 7 4
-1 2 Infantry Lancer 2 4
-0 3 Infantry Bowman 2 4
-2 5 Infantry Swordsman 2 4
-4 3 Infantry Hunstman 2 3
+1 2 Infantry Lancer 3 4
+0 3 Infantry Bowman 3 4
+2 5 Infantry Swordsman 3 4
+4 3 Infantry Huntsman 4 4

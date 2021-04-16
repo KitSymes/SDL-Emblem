@@ -402,11 +402,15 @@ void BattleScreen::Render()
 				{
 					SDL_Rect source = { 10,0,10,10 };
 					m_icons_texture->Render(Vector2D(425, 271), &source, SDL_FLIP_NONE);
+					SDL_Rect source2 = { 0,0,10,10 };
+					m_icons_texture->Render(Vector2D(425, 71), &source2, SDL_FLIP_NONE);
 				}
 				else if (Utils::IsIneffective(m_hovered->GetWeaponType(), m_attack_target->GetWeaponType()))
 				{
 					SDL_Rect source = { 0,0,10,10 };
 					m_icons_texture->Render(Vector2D(425, 271), &source, SDL_FLIP_NONE);
+					SDL_Rect source2 = { 10,0,10,10 };
+					m_icons_texture->Render(Vector2D(425, 71), &source2, SDL_FLIP_NONE);
 				}
 
 				if (GetTile(m_attack_target)->attackBonus > 0)

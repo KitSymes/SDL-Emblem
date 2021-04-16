@@ -13,4 +13,5 @@ alternateLevelClear
 5 7
 1 2 Infantry Lancer 2 2
 0 3 Infantry Bowman 2 2
+0 4 Infantry Bowman 2 2
 2 5 Infantry Swordsman 2 3
