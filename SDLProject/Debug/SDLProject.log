@@ -1,32 +1,19 @@
-﻿  MapScreen.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(266,127): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(266,102): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(345,16): warning C4018: '>=': signed/unsigned mismatch
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(436,28): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(436,28): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(436,40): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(436,40): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(530,95): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(530,80): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(537,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(544,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(544,86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(553,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(553,86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(566,95): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(566,80): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(572,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(572,86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(578,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(578,86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(584,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(584,86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(598,23): warning C4018: '<': signed/unsigned mismatch
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(601,77): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(611,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(617,17): warning C4018: '<': signed/unsigned mismatch
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(618,77): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MapScreen.cpp(628,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  SaveData.cpp
-  Generating Code...
+﻿  MarioScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(57,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(57,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(88,20): warning C4018: '<': signed/unsigned mismatch
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(99,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(99,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(104,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(104,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(107,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(107,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(111,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(111,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(115,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(115,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(120,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(120,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(127,20): warning C4018: '<': signed/unsigned mismatch
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(138,20): warning C4018: '<': signed/unsigned mismatch
   SDLProject.vcxproj -> E:\Users\Owner\Documents\GitHub\SDLProject\Debug\SDLProject.exe

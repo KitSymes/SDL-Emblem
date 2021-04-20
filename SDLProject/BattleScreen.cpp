@@ -530,11 +530,11 @@ void BattleScreen::Render()
 		}
 		else
 		{
-			if (m_phase_timer <= 10) // 0-10
+			if (m_phase_timer <= 11) // 0-10 // 0-11
 			{
 
 			}
-			else // 11-20
+			else // 11-20 // 12-20
 			{
 				SDL_Rect source = { 26 * ((m_phase_timer - 11) / 3), 0, 26, 26 };
 				m_sparks_texture->Render(defender->GetRawPosition(), &source, SDL_FLIP_NONE, 2);
@@ -901,9 +901,9 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 				int maxDamage = attacker->GetDamageResult(defender, GetTile(defender), GetTile(attacker));
 				if (maxDamage > defender->m_health)
 					maxDamage = defender->m_health;
-				double healthLeftD = defender->m_health - ((m_phase_timer - 11) * maxDamage / 9.0);
+				double healthLeftD = defender->m_health - ((m_phase_timer - 11) * maxDamage / 8.0);
 				m_health_left = ceil(healthLeftD);
-				m_health_left = std::max(0, m_health_left); // TODO changed this
+				m_health_left = std::max(0, m_health_left);
 			}
 			m_phase_timer++;
 		}

@@ -76,6 +76,7 @@ bool MarioScreen::SetUpLevel()
 	CreateCoin(Vector2D(454, 150));
 
 	LoadMusic("Sounds/Music_Mario.mp3");
+	Mix_VolumeMusic(15);
 
 	return true;
 }
@@ -213,6 +214,7 @@ void MarioScreen::ShakeScreen()
 	for (unsigned int i = 0; i < m_koopas.size(); i++)
 		m_koopas[i]->TakeDamage();
 }
+
 void MarioScreen::UpdateEnemies(float deltaTime, SDL_Event e)
 {
 	if (m_koopa_klock <= 0 && m_koopas.size() < 6)

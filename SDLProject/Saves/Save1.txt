@@ -8,5 +8,5 @@ Bool alternateLevelClear 1
 Bool bridgeLevelClear 1
 Bool castleLevelClear 1
 Bool caveLevelClear 0
-Int lastMap 2
-Int returnDir 0
+Int lastMap 6
+Int returnDir 1
