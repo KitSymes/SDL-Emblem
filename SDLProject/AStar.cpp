@@ -8,7 +8,7 @@ static bool isValid(Tile map[EMBLEM_MAP_DIMENSION][EMBLEM_MAP_DIMENSION], Charac
 		return false;
 	}
 	// If the tile has a negative movement cost (e.g. it's completely unoccupiable)
-	if (map[y][x].moveCost < 0)
+	if (map[y][x].moveCost < 0 || map[y][x].moveCost == 999)
 		return false;
 	if (map[y][x].occupied)
 		return false;

@@ -75,7 +75,7 @@ bool MarioScreen::SetUpLevel()
 	CreateCoin(Vector2D(10, 150));
 	CreateCoin(Vector2D(454, 150));
 
-	LoadMusic("Audio/Mario/Mario.mp3");
+	LoadMusic("Sounds/Music_Mario.mp3");
 
 	return true;
 }

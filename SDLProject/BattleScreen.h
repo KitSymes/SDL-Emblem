@@ -29,6 +29,7 @@ private:
 	Mix_Chunk* m_hurt_sound;
 	Mix_Chunk* m_exp_sound;
 	Mix_Chunk* m_lvl_up_sound;
+	Mix_Chunk* m_click_sound;
 
 	TTF_Font* m_font;
 	Text* m_damage; // HP -> New HP text

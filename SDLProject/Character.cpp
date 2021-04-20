@@ -197,9 +197,7 @@ void Character::RandomStats(int level)
 void Character::LevelUp()
 {
 	m_level++;
-	m_attack += (rand() % 2) + 1;
-	if (m_friendly)
-		m_attack++;
+	m_attack += (rand() % 2) + 2;
 	if (m_weapon_type == BOW)
 		m_attack += (rand() % 1);
 	m_defence += (rand() % 1) + 1;
@@ -241,7 +239,7 @@ int Character::GetDamageResult(Character* defender, Tile* theirs, Tile* mine)
 		int damage = (m_attack + mine->attackBonus + (multi > 1 ? (m_attack < 5 ? 2 : 0) : 0)) - (defender->m_defence + theirs->defenceBonus);
 		if (damage < 0)
 			damage = 0;
-		damage *= multi;
+		damage = ceil(damage * multi);
 		return damage;
 	}
 }

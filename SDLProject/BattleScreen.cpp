@@ -96,6 +96,13 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 		std::cout << Mix_GetError() << std::endl;
 	}
 
+	m_click_sound = Mix_LoadWAV("Sounds/Click.wav");
+	if (!m_click_sound)
+	{
+		std::cout << "Failed to load Sounds/Click.wav sound!" << std::endl;
+		std::cout << Mix_GetError() << std::endl;
+	}
+
 	m_font = TTF_OpenFont("Fonts/calibri.ttf", 15);
 
 	m_players_turn = true;
@@ -236,6 +243,8 @@ BattleScreen::BattleScreen(SDL_Renderer* renderer, GameScreenManager* gsm, char*
 	for (AStar::Node node : AStar::aStar(m_map, m_enemy_units[1], enemy, player)) {
 		std::cout << "(x" << node.x << " y" << node.y << ")" << std::endl;
 	}*/
+	LoadMusic("Sounds/Music_Battle.mp3");
+	Mix_VolumeMusic(15);
 	PlayerTurn();
 }
 
@@ -247,6 +256,8 @@ BattleScreen::~BattleScreen()
 	m_exp_sound = nullptr;
 	Mix_FreeChunk(m_lvl_up_sound);
 	m_lvl_up_sound = nullptr;
+	Mix_FreeChunk(m_click_sound);
+	m_click_sound = nullptr;
 
 	TTF_CloseFont(m_font);
 	m_font = nullptr;
@@ -720,15 +731,15 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 
 										}
 									}
+									path = AStar::aStar(map, enemy, nodeEnemy, nodePlayer);
 									if (distance == 0)
 									{
 										m_finalTarget = player;
 										finalTargetDistance = 0;
 										m_finalPath.clear();
 									}
-									else
+									else if (path.size() != 0)
 									{
-										path = AStar::aStar(map, enemy, nodeEnemy, nodePlayer);
 										int tileDistanceFromTarget = path.at(path.size() - 2).gCost;
 										if (tileDistanceFromTarget < finalTargetDistance)
 										{
@@ -1004,11 +1015,14 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 		{
 			if (m_hovered_selected_state == SELECTED_MOVING) // If player is moving their character
 			{
-				if (m_current_movement_matrix[(int)m_last_cursor_tile.y][(int)m_last_cursor_tile.x] == 2) // This square can be moved to
+				if (m_current_movement_matrix[(int)m_last_cursor_tile.y][(int)m_last_cursor_tile.x] == 2 && // This square can be moved to
+					(m_last_cursor_tile == m_hovered->GetMapPosition() || m_map[(int)m_last_cursor_tile.y][(int)m_last_cursor_tile.x].occupied == false)) // And is unoccupied
 				{
 					m_hovered_selected_state = SELECTED_CHOICES;
-
 					m_action_cursor_option = 0;
+
+					m_move_proposed_x = m_last_cursor_tile.x;
+					m_move_proposed_y = m_last_cursor_tile.y;
 
 					m_action_ui.x = m_hovered->GetRawPosition().x + EMBLEM_TILE_DIMENSION;
 					if (m_action_ui.x + m_action_background_texture->GetWidth() * 2 >= SCREEN_WIDTH)
@@ -1034,12 +1048,14 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 				{
 					m_hovered->UpdateText(m_font, &m_map[m_move_proposed_y][m_move_proposed_x]);
 					m_hovered_selected_state = SELECTED_ATTACKING;
+					Mix_PlayChannel(-1, m_click_sound, 0);
 				}
 				else if (Collisions::Instance()->Inside(e.button.x, e.button.y, Rect2D(m_action_ui.x + 20, m_action_ui.y + 62, 152, 20))) // Wait
 				{
 					ExhaustUnit(m_hovered);
 					m_hovered_selected_state = SELECTED_NONE;
 					m_hovered = nullptr;
+					Mix_PlayChannel(-1, m_click_sound, 0);
 				}
 			}
 			else if (m_hovered_selected_state == SELECTED_ATTACKING)

@@ -15,6 +15,8 @@ void SaveData::DefaultValues()
 	forestLevelClear = false;
 	alternateLevelClear = false;
 	bridgeLevelClear = false;
+	castleLevelClear = false;
+	caveLevelClear = false;
 	lastMap = 0;
 	returnDir = 0;
 }

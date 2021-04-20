@@ -167,6 +167,7 @@ bool MapScreen::SetUpLevel()
 	caveLevel = new PoI(2, 6);
 	caveLevel->north.push_back(0);
 	caveLevel->north.push_back(0);
+	caveLevel->mapFile = "mapCave.txt";
 
 	start->northPoI = firstLevel;
 	firstLevel->southPoI = start;
@@ -304,6 +305,8 @@ bool MapScreen::SetUpLevel()
 	for (Character* c : SaveData::Instance()->m_allies)
 		c->SetAlive(false);
 
+	LoadMusic("Sounds/Music_Map.mp3");
+	Mix_VolumeMusic(28);
 
 	return true;
 }
@@ -340,7 +343,28 @@ void MapScreen::Render()
 			m_index++;
 			m_timer = 0;
 			if (m_index >= m_current_path->size())
+			{
 				moving = false;
+
+				if (currentPos == start)
+					SaveData::Instance()->lastMap = 0;
+				else if (currentPos == firstLevel)
+					SaveData::Instance()->lastMap = 1;
+				else if (currentPos == forestLevel)
+					SaveData::Instance()->lastMap = 2;
+				else if (currentPos == alternateLevel)
+					SaveData::Instance()->lastMap = 3;
+				else if (currentPos == beforeBridge)
+					SaveData::Instance()->lastMap = 4;
+				else if (currentPos == bridgeLevel)
+					SaveData::Instance()->lastMap = 5;
+				else if (currentPos == lastSplit)
+					SaveData::Instance()->lastMap = 6;
+				else if (currentPos == castleLevel)
+					SaveData::Instance()->lastMap = 7;
+				else if (currentPos == caveLevel)
+					SaveData::Instance()->lastMap = 8;
+			}
 		}
 		else
 		{
@@ -477,6 +501,7 @@ void MapScreen::Update(float deltaTime, SDL_Event e)
 			case SDLK_KP_ENTER:
 				if (!currentPos->mapFile.empty())
 				{
+					ClearMusic();
 					BattleScreen* bs = new BattleScreen(m_renderer, m_gsm, (char*)("BattleMaps/" + currentPos->mapFile).c_str());
 					m_gsm->ChangeScreen(bs);
 				}
