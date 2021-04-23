@@ -1,19 +1,61 @@
-﻿  MarioScreen.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(57,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(57,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(88,20): warning C4018: '<': signed/unsigned mismatch
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(99,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(99,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(104,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(104,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(107,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(107,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(111,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(111,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(115,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(115,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(120,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(120,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(127,20): warning C4018: '<': signed/unsigned mismatch
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioScreen.cpp(138,20): warning C4018: '<': signed/unsigned mismatch
+﻿  BattleScreen.cpp
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(165,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(165,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(224,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(224,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(326,67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(326,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(328,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(328,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(334,67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(334,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(336,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(336,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(342,67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(342,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(513,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(566,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(571,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(631,46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(632,46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(634,48): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(635,48): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(657,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(663,29): warning C4018: '<': signed/unsigned mismatch
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(682,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(686,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(692,49): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(697,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(701,57): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(707,46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(711,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(717,49): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(722,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(726,57): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(743,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(749,30): warning C4018: '<': signed/unsigned mismatch
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(809,125): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(809,80): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(847,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(852,85): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(852,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(905,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1024,44): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1025,44): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1106,76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1106,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1123,46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1124,46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1139,45): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1140,45): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1157,67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1157,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1166,67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1166,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1251,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1251,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1284,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1290,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1329,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\BattleScreen.cpp(1335,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   SDLProject.vcxproj -> E:\Users\Owner\Documents\GitHub\SDLProject\Debug\SDLProject.exe

@@ -1093,8 +1093,6 @@ void BattleScreen::Update(float deltaTime, SDL_Event e)
 			}
 			else if (m_hovered_selected_state == SELECTED_ATTACKING)
 			{
-				m_move_proposed_x = m_hovered->GetMapPosition().x;
-				m_move_proposed_y = m_hovered->GetMapPosition().y;
 				m_hovered->UpdateText(m_font, GetTile(m_hovered));
 				m_hovered_selected_state = SELECTED_CHOICES;
 			}
