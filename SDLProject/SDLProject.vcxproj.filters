@@ -409,19 +409,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="SDL2\SDL\SDL2.lib" />
-    <Library Include="SDL2\SDL\SDL2_image.lib" />
-    <Library Include="SDL2\SDL\SDL2_mixer.lib" />
-    <Library Include="SDL2\SDL\SDL2main.lib" />
-    <Library Include="SDL2\SDL\SDL2test.lib" />
-    <Library Include="SDL2\lib\x64\SDL2main.lib" />
-    <Library Include="SDL2\lib\x64\SDL2test.lib" />
-    <Library Include="SDL2\SDL\SDL2_ttf.lib" />
+    <None Include="SDL2\lib\x64\SDL2.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SDL2\lib\x64\SDL2.dll" />
-    <None Include="SDL2\SDL\libfreetype-6.dll" />
-    <None Include="SDL2\SDL\SDL2_ttf.dll" />
-    <None Include="SDL2\SDL\zlib1.dll" />
+    <Library Include="SDL2\lib\x64\SDL2.lib" />
+    <Library Include="SDL2\lib\x64\SDL2main.lib" />
+    <Library Include="SDL2\lib\x64\SDL2test.lib" />
   </ItemGroup>
 </Project>

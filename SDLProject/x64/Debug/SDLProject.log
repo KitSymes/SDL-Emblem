@@ -1,40 +1,43 @@
-﻿  AStar.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  BattleScreen.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  Character.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  MarioCharacterCoin.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  MarioCharacterKoopa.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  Collisions.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  GameScreen.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  MarioLevelMap.cpp
-  MarioPlayerLuigi.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  MapScreen.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  GameScreenManager.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreenManager.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  MarioPlayerMario.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  MarioCharacter.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\MarioCharacter.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  MarioScreen.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  PowBlock.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\PowBlock.h(2,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  SaveData.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Character.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  Source.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Source.cpp(1,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  Text.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Text.h(5,10): fatal error C1083: Cannot open include file: 'SDL_ttf.h': No such file or directory
-  Texture2D.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\Texture2D.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  TitleScreen.cpp
-E:\Users\Owner\Documents\GitHub\SDLProject\SDLProject\GameScreen.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
-  Generating Code...
+﻿TitleScreen.obj : error LNK2001: unresolved external symbol Mix_LoadWAV_RW
+BattleScreen.obj : error LNK2001: unresolved external symbol Mix_LoadWAV_RW
+MapScreen.obj : error LNK2001: unresolved external symbol Mix_LoadWAV_RW
+MarioCharacter.obj : error LNK2001: unresolved external symbol Mix_LoadWAV_RW
+MarioScreen.obj : error LNK2001: unresolved external symbol Mix_LoadWAV_RW
+TitleScreen.obj : error LNK2001: unresolved external symbol Mix_FreeChunk
+BattleScreen.obj : error LNK2001: unresolved external symbol Mix_FreeChunk
+MapScreen.obj : error LNK2001: unresolved external symbol Mix_FreeChunk
+MarioCharacter.obj : error LNK2001: unresolved external symbol Mix_FreeChunk
+MarioScreen.obj : error LNK2001: unresolved external symbol Mix_FreeChunk
+TitleScreen.obj : error LNK2001: unresolved external symbol Mix_PlayChannelTimed
+BattleScreen.obj : error LNK2001: unresolved external symbol Mix_PlayChannelTimed
+MapScreen.obj : error LNK2001: unresolved external symbol Mix_PlayChannelTimed
+MarioCharacter.obj : error LNK2001: unresolved external symbol Mix_PlayChannelTimed
+MarioScreen.obj : error LNK2001: unresolved external symbol Mix_PlayChannelTimed
+BattleScreen.obj : error LNK2019: unresolved external symbol Mix_VolumeMusic referenced in function "public: __cdecl BattleScreen::BattleScreen(struct SDL_Renderer *,class GameScreenManager *,char *)" (??0BattleScreen@@QEAA@PEAUSDL_Renderer@@PEAVGameScreenManager@@PEAD@Z)
+MapScreen.obj : error LNK2001: unresolved external symbol Mix_VolumeMusic
+MarioScreen.obj : error LNK2001: unresolved external symbol Mix_VolumeMusic
+BattleScreen.obj : error LNK2019: unresolved external symbol TTF_OpenFont referenced in function "public: __cdecl BattleScreen::BattleScreen(struct SDL_Renderer *,class GameScreenManager *,char *)" (??0BattleScreen@@QEAA@PEAUSDL_Renderer@@PEAVGameScreenManager@@PEAD@Z)
+MapScreen.obj : error LNK2001: unresolved external symbol TTF_OpenFont
+TitleScreen.obj : error LNK2001: unresolved external symbol TTF_OpenFont
+BattleScreen.obj : error LNK2019: unresolved external symbol TTF_CloseFont referenced in function "public: virtual __cdecl BattleScreen::~BattleScreen(void)" (??1BattleScreen@@UEAA@XZ)
+MapScreen.obj : error LNK2001: unresolved external symbol TTF_CloseFont
+TitleScreen.obj : error LNK2001: unresolved external symbol TTF_CloseFont
+GameScreen.obj : error LNK2019: unresolved external symbol Mix_LoadMUS referenced in function "public: void __cdecl GameScreen::LoadMusic(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?LoadMusic@GameScreen@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+GameScreen.obj : error LNK2019: unresolved external symbol Mix_FreeMusic referenced in function "public: void __cdecl GameScreen::ClearMusic(void)" (?ClearMusic@GameScreen@@QEAAXXZ)
+GameScreen.obj : error LNK2019: unresolved external symbol Mix_PlayMusic referenced in function "public: void __cdecl GameScreen::LoadMusic(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?LoadMusic@GameScreen@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+GameScreen.obj : error LNK2019: unresolved external symbol Mix_PlayingMusic referenced in function "public: void __cdecl GameScreen::LoadMusic(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?LoadMusic@GameScreen@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Source.obj : error LNK2019: unresolved external symbol IMG_Init referenced in function "bool __cdecl InitSDL(void)" (?InitSDL@@YA_NXZ)
+Source.obj : error LNK2019: unresolved external symbol IMG_Quit referenced in function "void __cdecl CloseSDL(void)" (?CloseSDL@@YAXXZ)
+Source.obj : error LNK2019: unresolved external symbol Mix_Quit referenced in function "void __cdecl CloseSDL(void)" (?CloseSDL@@YAXXZ)
+Source.obj : error LNK2019: unresolved external symbol Mix_OpenAudio referenced in function "bool __cdecl InitSDL(void)" (?InitSDL@@YA_NXZ)
+Source.obj : error LNK2019: unresolved external symbol TTF_Init referenced in function "bool __cdecl InitSDL(void)" (?InitSDL@@YA_NXZ)
+Source.obj : error LNK2019: unresolved external symbol TTF_Quit referenced in function "void __cdecl CloseSDL(void)" (?CloseSDL@@YAXXZ)
+Text.obj : error LNK2019: unresolved external symbol TTF_RenderText_Solid referenced in function "public: __cdecl Text::Text(struct SDL_Renderer *,struct _TTF_Font *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct SDL_Color)" (??0Text@@QEAA@PEAUSDL_Renderer@@PEAU_TTF_Font@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@USDL_Color@@@Z)
+Text.obj : error LNK2019: unresolved external symbol TTF_RenderText_Blended_Wrapped referenced in function "public: __cdecl Text::Text(struct SDL_Renderer *,struct _TTF_Font *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int,struct SDL_Color)" (??0Text@@QEAA@PEAUSDL_Renderer@@PEAU_TTF_Font@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HUSDL_Color@@@Z)
+Texture2D.obj : error LNK2019: unresolved external symbol IMG_Load referenced in function "public: bool __cdecl Texture2D::LoadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?LoadFromFile@Texture2D@@QEAA_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+E:\Users\Owner\Documents\GitHub\SDL-Emblem\SDLProject\\SDL2\SDL\SDL2.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+E:\Users\Owner\Documents\GitHub\SDL-Emblem\SDLProject\\SDL2\SDL\SDL2main.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+E:\Users\Owner\Documents\GitHub\SDL-Emblem\SDLProject\\SDL2\SDL\SDL2_image.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+E:\Users\Owner\Documents\GitHub\SDL-Emblem\SDLProject\\SDL2\SDL\SDL2_mixer.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+E:\Users\Owner\Documents\GitHub\SDL-Emblem\SDLProject\\SDL2\SDL\SDL2_ttf.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+E:\Users\Owner\Documents\GitHub\SDL-Emblem\x64\Debug\SDLProject.exe : fatal error LNK1120: 19 unresolved externals
